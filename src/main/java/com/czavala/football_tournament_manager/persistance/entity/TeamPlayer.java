@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "t_team_player")
-// todo - agregar constraint unique para combinacion de playerId, teamId, tournamentId
+@Table(
+        name = "t_team_player",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "team_id", "tournament_id"})
+)
 public class TeamPlayer {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +23,25 @@ public class TeamPlayer {
     @Column(name = "is_active", nullable = false)
     // indica si un jugador sigue activo en un equipo durante un determinado torneo
     private boolean isActive;
+
+    @Column(name = "player_id", nullable = false)
+    private Long playerId;
+
+    @Column(name = "team_id", nullable = false)
+    private Long teamId;
+
+    @Column(name = "tournament_id", nullable = false)
+    private Long tournamentId;
+
+    @ManyToOne
+    @JoinColumn(name = "player_id", insertable = false, updatable = false)
+    private Player player;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id", insertable = false, updatable = false)
+    private Team team;
+
+    @ManyToOne
+    @JoinColumn(name = "tournament_id", insertable = false, updatable = false)
+    private Tournament tournament;
 }

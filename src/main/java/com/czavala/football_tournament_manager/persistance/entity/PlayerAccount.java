@@ -25,4 +25,14 @@ public class PlayerAccount {
 
     @Column(name = "birth_date", nullable = false)
     private Date birthDate;
+
+    @Column(nullable = false)
+    private boolean isActive;
+
+    @Column(name = "player_id", nullable = false)
+    private Long playerId;
+
+    @OneToOne
+    @JoinColumn(name = "player_id", insertable = false, updatable = false)
+    private Player player;
 }

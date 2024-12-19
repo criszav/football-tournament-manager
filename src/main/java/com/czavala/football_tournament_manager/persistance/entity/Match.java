@@ -1,13 +1,17 @@
 package com.czavala.football_tournament_manager.persistance.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
+
 
 @Entity
-@Table(name = "t_match")
+@Table(
+        name = "t_match",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"home_team_id", "away_team_id"})
+)
 public class Match {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +29,41 @@ public class Match {
     @Column(name = "away_team_goals")
     private int awayTeamGoals;
 
+    @OneToMany(mappedBy = "match")
+    private List<Attendance> attendances;
 
+    @OneToMany(mappedBy = "match")
+    private List<Card> cards;
+
+    @OneToMany(mappedBy = "match")
+    private List<Goal> goals;
+
+    @Column(name = "tournament_id", nullable = false)
+    private Long tournamentId;
+
+    @ManyToOne
+    @JoinColumn(name = "tournament_id", insertable = false, updatable = false)
+    private Tournament tournament;
+
+    @Column(name = "match_status_id", nullable = false)
+    private Long matchStatusId;
+
+    @ManyToOne
+    @JoinColumn(name = "match_status_id", insertable = false, updatable = false)
+    private MatchStatus matchStatus;
+
+    @Column(name = "home_team_id", nullable = false)
+    private Long homeTeamId;
+
+    @ManyToOne
+    @JoinColumn(name = "home_team_id", insertable = false, updatable = false)
+    private Team homeTeam;
+
+    @Column(name = "away_team_id", nullable = false)
+    private Long awayTeamId;
+
+    @ManyToOne
+    @JoinColumn(name = "away_team_id", insertable = false, updatable = false)
+    private Team awayTeam;
 
 }

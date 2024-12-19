@@ -2,6 +2,8 @@ package com.czavala.football_tournament_manager.persistance.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "t_match_status")
 public class MatchStatus {
@@ -16,4 +18,7 @@ public class MatchStatus {
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
+
+    @OneToMany(mappedBy = "matchStatus")
+    private List<Match> matches;
 }

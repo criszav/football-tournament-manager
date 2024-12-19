@@ -15,7 +15,15 @@ public class TournamentTeam {
     @Column(name = "tournament_id", nullable = false)
     private Long tournamentId;
 
+    @ManyToOne
+    @JoinColumn(name = "tournament_id", insertable = false, updatable = false)
+    private Tournament tournament;
+
     @Column(name = "team_id", nullable = false)
     private Long teamId;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id", insertable = false, updatable = false)
+    private Team team;
 
 }

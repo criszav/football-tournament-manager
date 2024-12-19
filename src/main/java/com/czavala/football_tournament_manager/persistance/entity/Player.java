@@ -3,11 +3,13 @@ package com.czavala.football_tournament_manager.persistance.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Check;
 
+import java.util.List;
+
 @Entity
 @Table(
-        name = "t_player",
+        name = "t_player"
         // no puede haber dos jugadores con el mimso numero de camiseta en un mismo equipo
-        uniqueConstraints = @UniqueConstraint(columnNames = {"squad_number", "team_id"})
+//        uniqueConstraints = @UniqueConstraint(columnNames = {"squad_number", "team_id"})
 )
 public class Player {
 
@@ -37,5 +39,27 @@ public class Player {
     // indica si un jugador esta habilitado para jugar
     @Column(name = "is_enabled", nullable = false)
     private boolean isEnabled;
+
+    @OneToMany(mappedBy = "player")
+    private List<Attendance> attendances;
+
+    @OneToMany(mappedBy = "player")
+    private List<Card> cards;
+
+    @OneToMany(mappedBy = "player")
+    private List<Goal> goals;
+
+    @Column(name = "team_id")
+    private Long teamId;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id", insertable = false, updatable = false)
+    private Team team;
+
+    @OneToMany(mappedBy = "player")
+    private List<TeamPlayer> teamsPlayer;
+
+    @OneToOne(mappedBy = "player")
+    private PlayerAccount playerAccount;
 
 }
