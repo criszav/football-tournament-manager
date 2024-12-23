@@ -3,6 +3,10 @@ package com.czavala.football_tournament_manager.persistance.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,5 +33,13 @@ public class TournamentTeam {
     @ManyToOne
     @JoinColumn(name = "team_id", insertable = false, updatable = false)
     private Team team;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(insertable = false)
+    private LocalDateTime lastModified;
 
 }
