@@ -1,15 +1,19 @@
 package com.czavala.football_tournament_manager.persistance.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Check;
 
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(
-        name = "t_player"
-        // no puede haber dos jugadores con el mimso numero de camiseta en un mismo equipo
-//        uniqueConstraints = @UniqueConstraint(columnNames = {"squad_number", "team_id"})
+        name = "t_player",
+        // no puede haber dos jugadores con el mismo numero de camiseta en un mismo equipo
+        uniqueConstraints = @UniqueConstraint(columnNames = {"squad_number", "team_id"})
 )
 public class Player {
 
