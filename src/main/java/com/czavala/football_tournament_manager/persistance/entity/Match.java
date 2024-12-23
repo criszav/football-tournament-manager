@@ -3,7 +3,10 @@ package com.czavala.football_tournament_manager.persistance.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -28,10 +31,10 @@ public class Match {
     private LocalTime matchKickOff;
 
     @Column(name = "home_team_goals")
-    private int homeTeamGoals;
+    private Integer homeTeamGoals;
 
     @Column(name = "away_team_goals")
-    private int awayTeamGoals;
+    private Integer awayTeamGoals;
 
     @OneToMany(mappedBy = "match")
     private List<Attendance> attendances;
@@ -69,5 +72,13 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "away_team_id", insertable = false, updatable = false)
     private Team awayTeam;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(insertable = false)
+    private LocalDateTime lastModified;
 
 }

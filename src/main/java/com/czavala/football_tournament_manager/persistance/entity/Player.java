@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Check;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -34,7 +37,7 @@ public class Player {
 
     @Check(constraints = "squad_number BETWEEN 1 AND 99")
     @Column(name = "squad_number", nullable = false)
-    private int squadNumber;
+    private Integer squadNumber;
 
     // indica si el jugador esta activo en el sistema
     @Column(name = "is_active", nullable = false)
@@ -65,5 +68,13 @@ public class Player {
 
     @OneToOne(mappedBy = "player")
     private PlayerAccount playerAccount;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(insertable = false)
+    private LocalDateTime lastModified;
 
 }

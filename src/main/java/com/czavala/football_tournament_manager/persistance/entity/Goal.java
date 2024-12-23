@@ -14,7 +14,7 @@ public class Goal {
     private Long id;
 
     @Column(nullable = false)
-    private int minute;
+    private Integer minute;
 
     @Column(name = "player_id", nullable = false)
     private Long playerId;

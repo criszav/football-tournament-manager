@@ -3,7 +3,10 @@ package com.czavala.football_tournament_manager.persistance.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class Tournament {
     private Date endDate;
 
     @Column(name = "number_of_teams", nullable = false)
-    private int numberOfTeams;
+    private Integer numberOfTeams;
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
@@ -56,4 +59,12 @@ public class Tournament {
 
     @OneToMany(mappedBy = "tournament")
     private List<TournamentTeam> tournamentTeams;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(insertable = false)
+    private LocalDateTime lastModified;
 }
