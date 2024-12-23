@@ -1,7 +1,11 @@
 package com.czavala.football_tournament_manager.persistance.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "t_goal")
 public class Goal {
