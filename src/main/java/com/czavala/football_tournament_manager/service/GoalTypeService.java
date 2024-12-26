@@ -5,9 +5,7 @@ import com.czavala.football_tournament_manager.dto.goal.SaveGoalTypeDto;
 import com.czavala.football_tournament_manager.persistance.entity.GoalType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 public interface GoalTypeService {
 

@@ -49,7 +49,7 @@ public class GoalTypeServiceImpl implements GoalTypeService {
         GoalType goalTypeFromDB = this.findGoalTypeEntityById(goalTypeId);
         goalTypeFromDB.setTypeName(saveGoalTypeDto.getTypeName());
         goalTypeFromDB.setDescription(saveGoalTypeDto.getDescription());
-        goalTypeFromDB.setActive(saveGoalTypeDto.isActive());
+        goalTypeFromDB.setActive(saveGoalTypeDto.getIsActive());
         goalTypeRepository.save(goalTypeFromDB);
 
         return GoalTypeMapper.mapToGoalTypeDto(goalTypeFromDB);

@@ -7,20 +7,21 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class SaveGoalTypeDto {
+public class SaveGoalTypeDto implements Serializable {
 
     @JsonProperty(value = "type_name")
     @NotBlank
-    @Size(min = 3, max = 255)
+    @Size(max = 50)
     private String typeName;
 
-    @NotBlank
-    @Size(min = 5, max = 255)
+    @Size(max = 255)
     private String description;
 
     @JsonProperty(value = "is_active")
     @NotNull
-    private boolean isActive;
+    private Boolean isActive;
 }

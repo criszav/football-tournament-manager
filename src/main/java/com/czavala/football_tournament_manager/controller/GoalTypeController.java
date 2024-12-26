@@ -2,7 +2,6 @@ package com.czavala.football_tournament_manager.controller;
 
 import com.czavala.football_tournament_manager.dto.goal.GoalTypeResponseDto;
 import com.czavala.football_tournament_manager.dto.goal.SaveGoalTypeDto;
-import com.czavala.football_tournament_manager.persistance.entity.GoalType;
 import com.czavala.football_tournament_manager.service.GoalTypeService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -41,7 +40,7 @@ public class GoalTypeController {
 
     @PutMapping("/{goal-type-id}")
     public ResponseEntity<GoalTypeResponseDto> updateOneById(@PathVariable(name = "goal-type-id") Long goalTypeId,
-                                                  @RequestBody @Valid SaveGoalTypeDto saveGoalTypeDto) {
+                                                             @RequestBody @Valid SaveGoalTypeDto saveGoalTypeDto) {
 
         GoalTypeResponseDto updatedGoalType = goalTypeService.updateById(goalTypeId, saveGoalTypeDto);
         return ResponseEntity.ok(updatedGoalType);

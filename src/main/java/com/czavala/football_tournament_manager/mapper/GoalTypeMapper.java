@@ -10,13 +10,13 @@ public class GoalTypeMapper {
 
         if (goalTypeEntity == null) return null;
 
-        GoalTypeResponseDto goalTypeResponseDto = new GoalTypeResponseDto();
-        goalTypeResponseDto.setId(goalTypeEntity.getId());
-        goalTypeResponseDto.setTypeName(goalTypeEntity.getTypeName());
-        goalTypeResponseDto.setDescription(goalTypeEntity.getDescription());
-        goalTypeResponseDto.setActive(goalTypeEntity.isActive());
+        return GoalTypeResponseDto.builder()
+                .id(goalTypeEntity.getId())
+                .typeName(goalTypeEntity.getTypeName())
+                .description(goalTypeEntity.getDescription())
+                .isActive(goalTypeEntity.isActive())
+                .build();
 
-        return goalTypeResponseDto;
     }
 
     public static GoalType mapToGoalTypeEntity(SaveGoalTypeDto saveGoalTypeDto) {
@@ -26,7 +26,7 @@ public class GoalTypeMapper {
         GoalType goalTypeEntity = new GoalType();
         goalTypeEntity.setTypeName(saveGoalTypeDto.getTypeName());
         goalTypeEntity.setDescription(saveGoalTypeDto.getDescription());
-        goalTypeEntity.setActive(saveGoalTypeDto.isActive());
+        goalTypeEntity.setActive(saveGoalTypeDto.getIsActive());
 
         return goalTypeEntity;
     }
