@@ -4,11 +4,15 @@ import com.czavala.football_tournament_manager.dto.user.SaveUserRoleDto;
 import com.czavala.football_tournament_manager.dto.user.UserRoleResponseDto;
 import com.czavala.football_tournament_manager.persistance.entity.UserRole;
 import com.czavala.football_tournament_manager.service.UserRoleService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 
 @RestController
@@ -34,9 +38,19 @@ public class UserRoleController {
     }
 
     @PostMapping
-    public ResponseEntity<UserRoleResponseDto> createOne(@RequestBody @Valid SaveUserRoleDto saveUserRole) {
+    public ResponseEntity<UserRoleResponseDto> createOne(@RequestBody @Valid SaveUserRoleDto saveUserRole,
+                                                         HttpServletRequest request) {
+
         UserRoleResponseDto newUserRole = userRoleService.create(saveUserRole);
-        return ResponseEntity.ok(newUserRole);
+
+        // Agrega Header 'Location' con URI del nuevo recurso creado
+        String baseUrl = request.getRequestURL().toString();
+        URI newUserRoleLocation = URI.create(baseUrl + "/" + newUserRole.getId());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .location(newUserRoleLocation)
+                .body(newUserRole);
     }
 
     @PutMapping("/{id}")

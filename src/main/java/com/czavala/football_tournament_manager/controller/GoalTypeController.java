@@ -3,11 +3,15 @@ package com.czavala.football_tournament_manager.controller;
 import com.czavala.football_tournament_manager.dto.goal.GoalTypeResponseDto;
 import com.czavala.football_tournament_manager.dto.goal.SaveGoalTypeDto;
 import com.czavala.football_tournament_manager.service.GoalTypeService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 
 @RestController
@@ -33,9 +37,19 @@ public class GoalTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<GoalTypeResponseDto> createOne(@RequestBody @Valid SaveGoalTypeDto saveGoalTypeDto) {
+    public ResponseEntity<GoalTypeResponseDto> createOne(@RequestBody @Valid SaveGoalTypeDto saveGoalTypeDto,
+                                                         HttpServletRequest request) {
+
         GoalTypeResponseDto newGoalType = goalTypeService.create(saveGoalTypeDto);
-        return ResponseEntity.ok(newGoalType);
+
+        // Agrega Header 'Location' con URI del nuevo recurso creado
+        String baseUrl = request.getRequestURL().toString();
+        URI newGoalTypeLocation = URI.create(baseUrl + "/" + newGoalType.getId());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .location(newGoalTypeLocation)
+                .body(newGoalType);
     }
 
     @PutMapping("/{goal-type-id}")

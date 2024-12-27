@@ -3,11 +3,15 @@ package com.czavala.football_tournament_manager.controller;
 import com.czavala.football_tournament_manager.dto.tournament.SaveTournamentStatusDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentStatusResponseDto;
 import com.czavala.football_tournament_manager.service.TournamentStatusService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 
 @RestController
@@ -33,9 +37,19 @@ public class TournamentStatusController {
     }
 
     @PostMapping
-    public ResponseEntity<TournamentStatusResponseDto> createOne(@RequestBody @Valid SaveTournamentStatusDto saveTournamentStatus) {
+    public ResponseEntity<TournamentStatusResponseDto> createOne(@RequestBody @Valid SaveTournamentStatusDto saveTournamentStatus,
+                                                                 HttpServletRequest request) {
+
         TournamentStatusResponseDto newTournamentStatus = tournamentStatusService.create(saveTournamentStatus);
-        return ResponseEntity.ok(newTournamentStatus);
+
+        // Agrega Header 'Location' con URI del nuevo recurso creado
+        String baseUrl = request.getRequestURL().toString();
+        URI newTournamentStatusLocation = URI.create(baseUrl + "/" + newTournamentStatus.getId());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .location(newTournamentStatusLocation)
+                .body(newTournamentStatus);
     }
 
     @PutMapping("/{id}")
