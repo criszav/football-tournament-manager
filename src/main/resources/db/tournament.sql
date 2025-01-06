@@ -1,0 +1,2 @@
+INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id, created_at) VALUES ("Segunda División Profesional de Chile 2024", '2024-03-02', '2024-10-31', 14, false, 1, 3, CURRENT_TIMESTAMP)
+INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id, created_at) VALUES ("Segunda División Profesional de Chile 2023", '2023-02-24', '2023-10-15', 14, false, 1, 3, CURRENT_TIMESTAMP)
