@@ -21,6 +21,9 @@ public class Team {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @Column(name = "team_code", unique = true, length = 3, nullable = false)
+    private String teamCode;
+
     @Column(name = "image_url", length = 2000)
     private String imageUrl;
 
@@ -50,7 +53,7 @@ public class Team {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
