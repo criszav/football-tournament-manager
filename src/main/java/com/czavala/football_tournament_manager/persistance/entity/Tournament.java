@@ -46,14 +46,14 @@ public class Tournament {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
     @Column(name = "tournament_status_id", nullable = false)
     private Long tournamentStatusId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tournament_status_id", insertable = false, updatable = false)
     private TournamentStatus tournamentStatus;
 
