@@ -23,6 +23,6 @@ public class TournamentStatus {
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
-    @OneToMany(mappedBy = "tournamentStatus")
+    @OneToMany(mappedBy = "tournamentStatus", fetch = FetchType.EAGER)
     private List<Tournament> tournaments;
 }
