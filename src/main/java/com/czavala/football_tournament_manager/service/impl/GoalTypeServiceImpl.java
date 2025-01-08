@@ -3,7 +3,7 @@ package com.czavala.football_tournament_manager.service.impl;
 import com.czavala.football_tournament_manager.dto.goal.GoalTypeResponseDto;
 import com.czavala.football_tournament_manager.dto.goal.SaveGoalTypeDto;
 import com.czavala.football_tournament_manager.exception.ResourceNotFoundException;
-import com.czavala.football_tournament_manager.mapper.GoalTypeMapper;
+import com.czavala.football_tournament_manager.mapper.goal.GoalTypeMapper;
 import com.czavala.football_tournament_manager.persistance.entity.GoalType;
 import com.czavala.football_tournament_manager.persistance.repository.GoalTypeRepository;
 import com.czavala.football_tournament_manager.service.GoalTypeService;

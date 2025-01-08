@@ -3,7 +3,7 @@ package com.czavala.football_tournament_manager.service.impl;
 import com.czavala.football_tournament_manager.dto.tournament.SaveTournamentStatusDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentStatusResponseDto;
 import com.czavala.football_tournament_manager.exception.ResourceNotFoundException;
-import com.czavala.football_tournament_manager.mapper.TournamentStatusMapper;
+import com.czavala.football_tournament_manager.mapper.tournament.TournamentStatusMapper;
 import com.czavala.football_tournament_manager.persistance.entity.TournamentStatus;
 import com.czavala.football_tournament_manager.persistance.repository.TournamentStatusRepository;
 import com.czavala.football_tournament_manager.service.TournamentStatusService;

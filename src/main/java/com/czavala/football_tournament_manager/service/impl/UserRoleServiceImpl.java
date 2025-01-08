@@ -3,7 +3,7 @@ package com.czavala.football_tournament_manager.service.impl;
 import com.czavala.football_tournament_manager.dto.user.SaveUserRoleDto;
 import com.czavala.football_tournament_manager.dto.user.UserRoleResponseDto;
 import com.czavala.football_tournament_manager.exception.ResourceNotFoundException;
-import com.czavala.football_tournament_manager.mapper.UserRoleMapper;
+import com.czavala.football_tournament_manager.mapper.user.UserRoleMapper;
 import com.czavala.football_tournament_manager.persistance.entity.UserRole;
 import com.czavala.football_tournament_manager.persistance.repository.UserRoleRepository;
 import com.czavala.football_tournament_manager.service.UserRoleService;
@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
