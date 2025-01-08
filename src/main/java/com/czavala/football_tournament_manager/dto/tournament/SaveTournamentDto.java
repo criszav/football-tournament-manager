@@ -6,11 +6,12 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
-public class SaveTournamentDto {
+public class SaveTournamentDto implements Serializable {
 
     @NotBlank
     @Size(min = 4, max = 255)

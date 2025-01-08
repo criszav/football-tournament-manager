@@ -5,10 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Builder
-public class GoalTypeResponseDto {
+public class GoalTypeResponseDto implements Serializable {
 
     private Long id;
     @JsonProperty(value = "type_name") private String typeName;

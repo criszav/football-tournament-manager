@@ -7,13 +7,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
 @Setter
 @Builder
-public class TournamentResponseDto {
+public class TournamentResponseDto implements Serializable {
 
     private Long id;
 
@@ -33,11 +34,11 @@ public class TournamentResponseDto {
     @JsonProperty(value = "is_active")
     private Boolean isActive;
 
-    @JsonProperty(value = "tournament_status_id")
-    private Long tournamentStatusId;
+    @JsonProperty(value = "tournament_status")
+    private TournamentStatusResponseDto tournamentStatus;
 
-    @JsonProperty(value = "user_id")
-    private Long userId;
+    @JsonProperty(value = "created_by")
+    private ResponseUserDto user;
 
     @JsonProperty(value = "created_at")
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")

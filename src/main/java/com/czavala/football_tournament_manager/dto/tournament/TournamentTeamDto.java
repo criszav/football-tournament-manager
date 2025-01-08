@@ -5,10 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Builder
-public class TournamentTeamDto {
+public class TournamentTeamDto implements Serializable {
 
     @JsonProperty("team_id")
     private Long teamId;

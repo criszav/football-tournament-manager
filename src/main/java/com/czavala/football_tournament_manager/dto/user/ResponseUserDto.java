@@ -5,10 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Builder
-public class ResponseUserDto {
+public class ResponseUserDto implements Serializable {
 
     private Long id;
 
