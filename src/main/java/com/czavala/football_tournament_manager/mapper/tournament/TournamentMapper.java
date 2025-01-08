@@ -25,8 +25,8 @@ public class TournamentMapper {
                 .endDate(tournament.getEndDate())
                 .numberOfTeams(tournament.getNumberOfTeams())
                 .isActive(tournament.isActive())
-                .tournamentStatusId(tournament.getTournamentStatusId())
-                .userId(tournament.getUserId())
+                .tournamentStatus(TournamentStatusMapper.mapToTournamentStatusDto(tournament.getTournamentStatus()))
+                .user(mapToUserDto(tournament.getUser()))
                 .createdAt(tournament.getCreatedAt())
                 .lastModified(tournament.getLastModified())
                 .build();
