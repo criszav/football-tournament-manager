@@ -1,13 +1,18 @@
 package com.czavala.football_tournament_manager.service.impl;
 
+import com.czavala.football_tournament_manager.dto.card.CardTournamentResponseDto;
+import com.czavala.football_tournament_manager.dto.team.TeamTournamentResponseDto;
 import com.czavala.football_tournament_manager.dto.tournament.SaveTournamentDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentResponseDto;
 import com.czavala.football_tournament_manager.exception.ResourceNotFoundException;
-import com.czavala.football_tournament_manager.mapper.TournamentMapper;
+import com.czavala.football_tournament_manager.mapper.card.CardMapper;
+import com.czavala.football_tournament_manager.mapper.tournament.TournamentMapper;
+import com.czavala.football_tournament_manager.mapper.team.TeamMapper;
 import com.czavala.football_tournament_manager.persistance.entity.Card;
-import com.czavala.football_tournament_manager.persistance.entity.Team;
 import com.czavala.football_tournament_manager.persistance.entity.Tournament;
+import com.czavala.football_tournament_manager.persistance.repository.CardRepository;
 import com.czavala.football_tournament_manager.persistance.repository.TournamentRepository;
+import com.czavala.football_tournament_manager.persistance.repository.TournamentTeamRepository;
 import com.czavala.football_tournament_manager.service.TournamentService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,21 +20,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class TournamentServiceImpl implements TournamentService {
 
     private final TournamentRepository tournamentRepository;
+    private final TournamentTeamRepository tournamentTeamRepository;
+    private final CardRepository cardRepository;
 
-    public TournamentServiceImpl(TournamentRepository tournamentRepository) {
+    public TournamentServiceImpl(
+            TournamentRepository tournamentRepository,
+            TournamentTeamRepository tournamentTeamRepository,
+            CardRepository cardRepository) {
+
         this.tournamentRepository = tournamentRepository;
+        this.tournamentTeamRepository = tournamentTeamRepository;
+        this.cardRepository = cardRepository;
     }
 
     @Transactional(readOnly = true)
     @Override
     public Page<TournamentResponseDto> findAllTournaments(Pageable pageable) {
         return tournamentRepository.findAll(pageable)
+                .map(TournamentMapper::mapToTournamentDto);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<TournamentResponseDto> findAllActiveTournaments(Pageable pageable) {
+        return tournamentRepository.findByIsActiveTrue(pageable)
                 .map(TournamentMapper::mapToTournamentDto);
     }
 
@@ -78,18 +97,24 @@ public class TournamentServiceImpl implements TournamentService {
         tournamentRepository.save(tournamentFromDB);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<Team> findAllTeamsByTournamentId(Long tournamentId) {
-        return null;
+    public Page<TeamTournamentResponseDto> findAllTeamsByTournamentId(Long tournamentId, Pageable pageable) {
+
+        return tournamentTeamRepository.findTeamByTournamentId(tournamentId, pageable)
+                .map(TeamMapper::mapToTeamTournamentDto);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<CardTournamentResponseDto> findAllCardsByTournamentId(Long tournamentId, Pageable pageable) {
+        return cardRepository.findByTournamentId(tournamentId, pageable)
+                .map(CardMapper::mapToCardTournamentDto);
     }
 
     @Override
-    public List<Card> findAllCardsByTournamentId(Long tournamentId) {
-        return null;
-    }
-
-    @Override
-    public List<Card> findTeamCardsByTournamentId(Long tournamentId, Long teamId) {
-        return null;
+    public Page<CardTournamentResponseDto> findTeamCardsByTournamentId(Long tournamentId, Long teamId, Pageable pageable) {
+        return cardRepository.findByTournamentIdAndTeamId(tournamentId, teamId, pageable)
+                .map(CardMapper::mapToCardTournamentDto);
     }
 }

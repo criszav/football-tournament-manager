@@ -1,5 +1,7 @@
 package com.czavala.football_tournament_manager.controller;
 
+import com.czavala.football_tournament_manager.dto.card.CardTournamentResponseDto;
+import com.czavala.football_tournament_manager.dto.team.TeamTournamentResponseDto;
 import com.czavala.football_tournament_manager.dto.tournament.SaveTournamentDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentResponseDto;
 import com.czavala.football_tournament_manager.persistance.entity.Card;
@@ -32,29 +34,17 @@ public class TournamentController {
         return ResponseEntity.ok(tournaments);
     }
 
+    @GetMapping("/active")
+    public ResponseEntity<Page<TournamentResponseDto>> findAllActiveTournaments(Pageable pageable) {
+
+        Page<TournamentResponseDto> tournaments = tournamentService.findAllActiveTournaments(pageable);
+        return ResponseEntity.ok(tournaments);
+    }
+
     @GetMapping("/{tournamentId}")
     public ResponseEntity<TournamentResponseDto> findOneById(@PathVariable Long tournamentId) {
         TournamentResponseDto tournament = tournamentService.findOneById(tournamentId);
         return ResponseEntity.ok(tournament);
-    }
-
-    @GetMapping("/{tournamentId}/teams")
-    public ResponseEntity<List<Team>> findAllTeamsByTournament(@PathVariable Long tournamentId) {
-        List<Team> teams = tournamentService.findAllTeamsByTournamentId(tournamentId);
-        return ResponseEntity.ok(teams);
-    }
-
-    @GetMapping("/{tournamentId}/cards")
-    public ResponseEntity<List<Card>> findAllCardsByTournamentId(@PathVariable Long tournamentId) {
-        List<Card> cards = tournamentService.findAllCardsByTournamentId(tournamentId);
-        return ResponseEntity.ok(cards);
-    }
-
-    @GetMapping("/{tournamentId}/cards/{teamId}")
-    public ResponseEntity<List<Card>> findTeamCardsByTournamentId(@PathVariable Long tournamentId,
-                                                                  @PathVariable Long teamId) {
-        List<Card> cardsByTeam = tournamentService.findTeamCardsByTournamentId(tournamentId, teamId);
-        return ResponseEntity.ok(cardsByTeam);
     }
 
     @PostMapping
@@ -83,6 +73,26 @@ public class TournamentController {
     public ResponseEntity<Void> disableOneById(@PathVariable Long tournamentId) {
         tournamentService.disableOneById(tournamentId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{tournamentId}/teams")
+    public ResponseEntity<Page<TeamTournamentResponseDto>> findAllTeamsByTournament(@PathVariable Long tournamentId, Pageable pageable) {
+        Page<TeamTournamentResponseDto> teams = tournamentService.findAllTeamsByTournamentId(tournamentId, pageable);
+        return ResponseEntity.ok(teams);
+    }
+
+    @GetMapping("/{tournamentId}/cards")
+    public ResponseEntity<Page<CardTournamentResponseDto>> findAllCardsByTournamentId(@PathVariable Long tournamentId, Pageable pageable) {
+        Page<CardTournamentResponseDto> cards = tournamentService.findAllCardsByTournamentId(tournamentId, pageable);
+        return ResponseEntity.ok(cards);
+    }
+
+    @GetMapping("/{tournamentId}/cards/{teamId}")
+    public ResponseEntity<Page<CardTournamentResponseDto>> findTeamCardsByTournamentId(@PathVariable Long tournamentId,
+                                                                                       @PathVariable Long teamId,
+                                                                                       Pageable pageable) {
+        Page<CardTournamentResponseDto> cardsByTeam = tournamentService.findTeamCardsByTournamentId(tournamentId, teamId, pageable);
+        return ResponseEntity.ok(cardsByTeam);
     }
 
 }
