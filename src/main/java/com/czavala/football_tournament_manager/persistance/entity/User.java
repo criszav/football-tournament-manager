@@ -1,5 +1,6 @@
 package com.czavala.football_tournament_manager.persistance.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,8 +41,8 @@ public class User {
     // indica si user esta activo en el sistema (true) o si se dió de baja su cuenta (false)
     private boolean isActive;
 
-    @OneToOne(mappedBy = "user")
-    private Team team;
+    @OneToMany(mappedBy = "user")
+    private List<Team> teams;
 
     @OneToMany(mappedBy = "user")
     private List<Tournament> tournaments;
