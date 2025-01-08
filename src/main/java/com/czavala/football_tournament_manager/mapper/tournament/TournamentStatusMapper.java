@@ -1,4 +1,4 @@
-package com.czavala.football_tournament_manager.mapper;
+package com.czavala.football_tournament_manager.mapper.tournament;
 
 import com.czavala.football_tournament_manager.dto.tournament.SaveTournamentStatusDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentStatusResponseDto;

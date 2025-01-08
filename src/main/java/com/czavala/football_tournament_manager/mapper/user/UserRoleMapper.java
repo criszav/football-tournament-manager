@@ -1,4 +1,4 @@
-package com.czavala.football_tournament_manager.mapper;
+package com.czavala.football_tournament_manager.mapper.user;
 
 import com.czavala.football_tournament_manager.dto.user.SaveUserRoleDto;
 import com.czavala.football_tournament_manager.dto.user.UserRoleResponseDto;

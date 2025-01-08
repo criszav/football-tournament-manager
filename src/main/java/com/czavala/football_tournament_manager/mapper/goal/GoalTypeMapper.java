@@ -1,4 +1,4 @@
-package com.czavala.football_tournament_manager.mapper;
+package com.czavala.football_tournament_manager.mapper.goal;
 
 import com.czavala.football_tournament_manager.dto.goal.GoalTypeResponseDto;
 import com.czavala.football_tournament_manager.dto.goal.SaveGoalTypeDto;
