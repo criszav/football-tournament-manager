@@ -60,8 +60,11 @@ public class Tournament {
     @OneToMany(mappedBy = "tournament")
     private List<TournamentTeam> tournamentTeams;
 
+    @OneToMany(mappedBy = "tournament")
+    private List<Goal> goals;
+
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp

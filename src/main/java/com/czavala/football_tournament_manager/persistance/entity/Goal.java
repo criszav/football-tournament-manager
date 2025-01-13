@@ -28,6 +28,9 @@ public class Goal {
     @Column(name = "goal_type_id", nullable = false)
     private Long goalTypeId;
 
+    @Column(name = "tournament_id", nullable = false)
+    private Long tournamentId;
+
     @ManyToOne
     @JoinColumn(name = "player_id", insertable = false, updatable = false)
     private Player player;
@@ -43,5 +46,9 @@ public class Goal {
     @ManyToOne
     @JoinColumn(name = "goal_type_id", insertable = false, updatable = false)
     private GoalType goalType;
+
+    @ManyToOne
+    @JoinColumn(name = "tournament_id", insertable = false, updatable = false)
+    private Tournament tournament;
 
 }
