@@ -55,7 +55,7 @@ public class User {
     private UserRole userRole;
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp

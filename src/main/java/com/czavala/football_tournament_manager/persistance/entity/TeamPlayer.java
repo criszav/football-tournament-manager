@@ -53,7 +53,7 @@ public class TeamPlayer {
     private Tournament tournament;
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp

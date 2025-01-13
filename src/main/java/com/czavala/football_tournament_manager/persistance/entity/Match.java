@@ -74,7 +74,7 @@ public class Match {
     private Team awayTeam;
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp

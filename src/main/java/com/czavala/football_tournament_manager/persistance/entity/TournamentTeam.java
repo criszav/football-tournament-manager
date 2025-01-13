@@ -35,7 +35,7 @@ public class TournamentTeam {
     private Team team;
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
