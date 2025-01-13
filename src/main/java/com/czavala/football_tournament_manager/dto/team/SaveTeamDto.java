@@ -12,28 +12,28 @@ import java.io.Serializable;
 public class SaveTeamDto implements Serializable {
 
     @JsonProperty(value = "team_name")
-    @NotBlank
-    @Size(max = 255)
+    @NotBlank(message = "{generic.notblank}")
+    @Size(max = 50, message = "{generic.max}")
     private String name;
 
     @JsonProperty(value = "team_code")
-    @NotBlank
-    @Size(min = 2, max = 3)
+    @NotBlank(message = "{generic.notblank}")
+    @Size(min = 2, max = 3, message = "{generic.size}")
     private String teamCode;
 
     @JsonProperty("image_url")
     private String imageUrl;
 
     @JsonProperty(value = "is_active")
-    @NotNull
+    @NotNull(message = "{generic.notnull}")
     private Boolean isActive;
 
     @JsonProperty(value = "is_enabled")
-    @NotNull
+    @NotNull(message = "{generic.notnull}")
     private Boolean isEnabled;
 
     @JsonProperty(value = "user_id")
-    @NotNull
-    @Positive
+    @NotNull(message = "{generic.notnull}")
+    @Positive(message = "{generic.positive}")
     private Long userId;
 }

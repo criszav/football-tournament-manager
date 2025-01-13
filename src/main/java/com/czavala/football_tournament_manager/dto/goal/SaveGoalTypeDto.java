@@ -14,14 +14,14 @@ import java.io.Serializable;
 public class SaveGoalTypeDto implements Serializable {
 
     @JsonProperty(value = "type_name")
-    @NotBlank
-    @Size(max = 50)
+    @NotBlank(message = "{generic.notblank}")
+    @Size(max = 50, message = "{generic.size}")
     private String typeName;
 
-    @Size(max = 255)
+    @Size(max = 255, message = "{generic.size}")
     private String description;
 
     @JsonProperty(value = "is_active")
-    @NotNull
+    @NotNull(message = "{generic.notnull}")
     private Boolean isActive;
 }
