@@ -35,6 +35,13 @@ public class Team {
     // indica si un equipo puede jugar y no tiene alguns sancion o suspension
     private boolean isEnabled;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
     @OneToMany(mappedBy = "team")
     private List<Card> cards;
 
@@ -50,13 +57,6 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<Player> players;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
-
     @OneToMany(mappedBy = "team")
     private List<TeamPlayer> teamsPlayer;
 
@@ -64,7 +64,7 @@ public class Team {
     private List<TournamentTeam> tournamentsTeam;
 
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
