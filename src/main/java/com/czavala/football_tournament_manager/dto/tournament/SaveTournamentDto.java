@@ -29,7 +29,7 @@ public class SaveTournamentDto implements Serializable {
     private Date endDate;
 
     @JsonProperty(value = "number_of_teams")
-    @Min(value = 1) @Max(value = 20)
+    @Min(value = 1) @Max(value = 80)
     private Integer numberOfTeams;
 
     @JsonProperty(value = "is_active")
