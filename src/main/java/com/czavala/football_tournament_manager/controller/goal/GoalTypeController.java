@@ -1,4 +1,4 @@
-package com.czavala.football_tournament_manager.controller;
+package com.czavala.football_tournament_manager.controller.goal;
 
 import com.czavala.football_tournament_manager.dto.goal.GoalTypeResponseDto;
 import com.czavala.football_tournament_manager.dto.goal.SaveGoalTypeDto;

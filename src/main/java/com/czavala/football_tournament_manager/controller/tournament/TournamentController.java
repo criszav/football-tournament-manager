@@ -1,4 +1,4 @@
-package com.czavala.football_tournament_manager.controller;
+package com.czavala.football_tournament_manager.controller.tournament;
 
 import com.czavala.football_tournament_manager.dto.card.CardTournamentResponseDto;
 import com.czavala.football_tournament_manager.dto.team.TeamTournamentResponseDto;
