@@ -13,7 +13,7 @@ public class Goal {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "goal_minute", nullable = false)
     private Integer minute;
 
     @Column(name = "player_id", nullable = false)
