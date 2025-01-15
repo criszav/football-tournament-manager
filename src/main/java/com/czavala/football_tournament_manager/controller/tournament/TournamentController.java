@@ -1,6 +1,7 @@
 package com.czavala.football_tournament_manager.controller.tournament;
 
 import com.czavala.football_tournament_manager.dto.card.CardTournamentResponseDto;
+import com.czavala.football_tournament_manager.dto.goal.GetGoalResponseDto;
 import com.czavala.football_tournament_manager.dto.team.TeamTournamentResponseDto;
 import com.czavala.football_tournament_manager.dto.tournament.SaveTournamentDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentResponseDto;
@@ -93,6 +94,30 @@ public class TournamentController {
                                                                                        Pageable pageable) {
         Page<CardTournamentResponseDto> cardsByTeam = tournamentService.findTeamCardsByTournamentId(tournamentId, teamId, pageable);
         return ResponseEntity.ok(cardsByTeam);
+    }
+
+    @GetMapping("/{tournamentId}/team-goals/{teamId}")
+    public ResponseEntity<Page<GetGoalResponseDto>> findTeamGoalsByTournamentId(@PathVariable Long tournamentId,
+                                                                                @PathVariable Long teamId,
+                                                                                Pageable pageable) {
+        Page<GetGoalResponseDto> goalsByTeam = tournamentService.findTeamGoalsByTournamentId(tournamentId, teamId, pageable);
+        return ResponseEntity.ok(goalsByTeam);
+    }
+
+    @GetMapping("/{tournamentId}/goals")
+    public ResponseEntity<Page<GetGoalResponseDto>> findGoalsByTournamentId(@PathVariable Long tournamentId,
+                                                                            Pageable pageable) {
+        Page<GetGoalResponseDto> goalsByTournament = tournamentService.findGoalsByTournamentId(tournamentId, pageable);
+        return ResponseEntity.ok(goalsByTournament);
+    }
+
+
+    @GetMapping("/{tournamentId}/player-goals/{playerId}")
+    public ResponseEntity<Page<GetGoalResponseDto>> findPlayerGoalsByTournamentId(@PathVariable Long tournamentId,
+                                                                                  @PathVariable Long playerId,
+                                                                                  Pageable pageable) {
+        Page<GetGoalResponseDto> goalsByTournament = tournamentService.findPlayerGoalsByTournamentId(tournamentId, playerId, pageable);
+        return ResponseEntity.ok(goalsByTournament);
     }
 
 }

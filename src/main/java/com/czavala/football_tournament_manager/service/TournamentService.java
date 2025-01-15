@@ -1,6 +1,7 @@
 package com.czavala.football_tournament_manager.service;
 
 import com.czavala.football_tournament_manager.dto.card.CardTournamentResponseDto;
+import com.czavala.football_tournament_manager.dto.goal.GetGoalResponseDto;
 import com.czavala.football_tournament_manager.dto.team.TeamTournamentResponseDto;
 import com.czavala.football_tournament_manager.dto.tournament.SaveTournamentDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentResponseDto;
@@ -33,4 +34,10 @@ public interface TournamentService {
     Page<CardTournamentResponseDto> findTeamCardsByTournamentId(Long tournamentId, Long teamId, Pageable pageable);
 
     Tournament findTournamentEntityById(Long tournamentId);
+
+    Page<GetGoalResponseDto> findTeamGoalsByTournamentId(Long tournamentId, Long teamId, Pageable pageable);
+
+    Page<GetGoalResponseDto> findGoalsByTournamentId(Long tournamentId, Pageable pageable);
+
+    Page<GetGoalResponseDto> findPlayerGoalsByTournamentId(Long tournamentId, Long playerId, Pageable pageable);
 }
