@@ -24,10 +24,10 @@ public class Match {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "match_date", nullable = false)
+    @Column(name = "match_date")
     private Date matchDate;
 
-    @Column(name = "match_kick_off", nullable = false)
+    @Column(name = "match_kick_off")
     private LocalTime matchKickOff;
 
     @Column(name = "home_team_goals")
