@@ -1,4 +1,4 @@
-package com.czavala.football_tournament_manager.controller;
+package com.czavala.football_tournament_manager.controller.match;
 
 import com.czavala.football_tournament_manager.dto.match.MatchResponseDto;
 import com.czavala.football_tournament_manager.dto.match.SaveMatchDto;
