@@ -40,4 +40,6 @@ public interface TournamentService {
     Page<GetGoalResponseDto> findGoalsByTournamentId(Long tournamentId, Pageable pageable);
 
     Page<GetGoalResponseDto> findPlayerGoalsByTournamentId(Long tournamentId, Long playerId, Pageable pageable);
+
+    Page<CardTournamentResponseDto> findPlayerCardsByTournamentId(Long tournamentId, Long playerId, Pageable pageable);
 }

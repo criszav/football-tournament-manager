@@ -96,6 +96,14 @@ public class TournamentController {
         return ResponseEntity.ok(cardsByTeam);
     }
 
+    @GetMapping("/{tournamentId}/cards/player/{playerId}")
+    public ResponseEntity<Page<CardTournamentResponseDto>> findPlayerCardsByTournamentId(@PathVariable Long tournamentId,
+                                                                                       @PathVariable Long playerId,
+                                                                                       Pageable pageable) {
+        Page<CardTournamentResponseDto> cardsByTeam = tournamentService.findPlayerCardsByTournamentId(tournamentId, playerId, pageable);
+        return ResponseEntity.ok(cardsByTeam);
+    }
+
     @GetMapping("/{tournamentId}/team-goals/{teamId}")
     public ResponseEntity<Page<GetGoalResponseDto>> findTeamGoalsByTournamentId(@PathVariable Long tournamentId,
                                                                                 @PathVariable Long teamId,

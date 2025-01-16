@@ -123,6 +123,12 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
+    public Page<CardTournamentResponseDto> findPlayerCardsByTournamentId(Long tournamentId, Long playerId, Pageable pageable) {
+        return cardRepository.findByTournamentIdAndPlayerId(tournamentId, playerId, pageable)
+                .map(CardMapper::mapToCardTournamentDto);
+    }
+
+    @Override
     public Page<GetGoalResponseDto> findTeamGoalsByTournamentId(Long tournamentId, Long teamId, Pageable pageable) {
         return goalRepository.findByTournamentIdAndTeamId(tournamentId, teamId, pageable)
                 .map(GoalMapper::mapToGoalDto);
