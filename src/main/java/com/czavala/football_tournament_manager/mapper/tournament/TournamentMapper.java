@@ -3,7 +3,8 @@ package com.czavala.football_tournament_manager.mapper.tournament;
 import com.czavala.football_tournament_manager.dto.tournament.SaveTournamentDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentResponseDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentTeamDto;
-import com.czavala.football_tournament_manager.dto.user.ResponseUserDto;
+import com.czavala.football_tournament_manager.dto.user.ResponseUserTournamentDto;
+import com.czavala.football_tournament_manager.mapper.user.UserMapper;
 import com.czavala.football_tournament_manager.persistance.entity.Tournament;
 import com.czavala.football_tournament_manager.persistance.entity.TournamentTeam;
 import com.czavala.football_tournament_manager.persistance.entity.User;
@@ -26,27 +27,12 @@ public class TournamentMapper {
                 .numberOfTeams(tournament.getNumberOfTeams())
                 .isActive(tournament.isActive())
                 .tournamentStatus(TournamentStatusMapper.mapToTournamentStatusDto(tournament.getTournamentStatus()))
-                .user(mapToUserDto(tournament.getUser()))
+                .user(UserMapper.mapToUserTournamentDto(tournament.getUser()))
                 .createdAt(tournament.getCreatedAt())
                 .lastModified(tournament.getLastModified())
                 .build();
     }
 
-    public static ResponseUserDto mapToUserDto(User user) {
-
-        if (user == null) return null;
-
-        return ResponseUserDto
-                .builder()
-                .id(user.getId())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .roleId(user.getUserRoleId())
-                .isActive(user.isActive())
-                .build();
-    }
 
     public static List<TournamentTeamDto> mapToListTournamentTeamDto(List<TournamentTeam> tournamentTeams) {
 
