@@ -28,6 +28,7 @@ public class SavePlayerDto implements Serializable {
     @JsonProperty(value = "squad_number")
     @Positive(message = "{generic.positive}")
     @Max(value = 99, message = "{generic.max}")
+    @Min(value = 1, message = "{generic.min}")
     private Integer squadNumber;
 
     @JsonProperty(value = "is_active")

@@ -1,5 +1,6 @@
 package com.czavala.football_tournament_manager.mapper.player;
 
+import com.czavala.football_tournament_manager.dto.player.PlayerResponseDto;
 import com.czavala.football_tournament_manager.dto.player.PlayerTeamDto;
 import com.czavala.football_tournament_manager.dto.player.SavePlayerDto;
 import com.czavala.football_tournament_manager.persistance.entity.Player;
@@ -42,6 +43,23 @@ public class PlayerMapper implements Serializable {
         player.setTeamId(savePlayerDto.getTeamId());
 
         return player;
+    }
+
+    public static PlayerResponseDto mapToPlayerResponseDto(Player playerEntity) {
+
+        if (playerEntity == null) return null;
+
+        return PlayerResponseDto.builder()
+                .id(playerEntity.getId())
+                .firstname(playerEntity.getFirstname())
+                .lastname(playerEntity.getLastname())
+                .nickname(playerEntity.getNickname())
+                .imageUrl(playerEntity.getImageUrl())
+                .squadNumber(playerEntity.getSquadNumber())
+                .isActive(playerEntity.isActive())
+                .isEnabled(playerEntity.isEnabled())
+                .teamName(playerEntity.getTeam().getName())
+                .build();
     }
 
 }
