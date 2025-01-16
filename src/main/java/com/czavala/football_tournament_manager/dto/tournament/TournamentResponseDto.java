@@ -1,6 +1,6 @@
 package com.czavala.football_tournament_manager.dto.tournament;
 
-import com.czavala.football_tournament_manager.dto.user.ResponseUserDto;
+import com.czavala.football_tournament_manager.dto.user.ResponseUserTournamentDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -38,7 +38,7 @@ public class TournamentResponseDto implements Serializable {
     private TournamentStatusResponseDto tournamentStatus;
 
     @JsonProperty(value = "created_by")
-    private ResponseUserDto user;
+    private ResponseUserTournamentDto user;
 
     @JsonProperty(value = "created_at")
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")

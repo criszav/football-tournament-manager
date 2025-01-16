@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
-public class ResponseUserDto implements Serializable {
+public class ResponseUserTournamentDto implements Serializable {
 
     private Long id;
 
