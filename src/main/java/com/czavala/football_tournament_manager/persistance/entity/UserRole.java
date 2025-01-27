@@ -20,6 +20,6 @@ public class UserRole {
 
     private String description;
 
-    @OneToMany(mappedBy = "userRole")
-    private List<User> users;
+//    @OneToMany(mappedBy = "userRole")
+//    private List<User> users;
 }
