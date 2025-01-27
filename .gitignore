@@ -33,3 +33,4 @@ build/
 .vscode/
 
 src/main/resources/rutas.md
+src/main/resources/application.properties
