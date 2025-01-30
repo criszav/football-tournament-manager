@@ -5,6 +5,7 @@ import com.czavala.football_tournament_manager.exception.InvalidPasswordExceptio
 import com.czavala.football_tournament_manager.persistance.entity.User;
 import com.czavala.football_tournament_manager.persistance.repository.UserRepository;
 import com.czavala.football_tournament_manager.service.UserService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -61,5 +62,11 @@ public class UserServiceImpl implements UserService {
             throw new InvalidPasswordException("Passwords do not match.");
         }
 
+    }
+
+    @Override
+    public User findOneByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found. Username: " + username));
     }
 }

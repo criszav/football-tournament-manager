@@ -7,4 +7,5 @@ public interface UserService {
 
     User registerOneManager(SaveManagerDto saveManagerDto);
 
+    User findOneByUsername(String username);
 }
