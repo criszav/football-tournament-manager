@@ -4,6 +4,7 @@ import com.czavala.football_tournament_manager.dto.ApiErrorDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,6 +18,24 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiErrorDto> handleBadCredentialsException(BadCredentialsException exception,
+                                                                     HttpServletRequest request) {
+
+        int httpCode = HttpStatus.UNAUTHORIZED.value();
+
+        ApiErrorDto apiError = new ApiErrorDto();
+        apiError.setHttpCode(httpCode);
+        apiError.setHttpMethod(request.getMethod());
+        apiError.setUrl(request.getRequestURL().toString());
+        apiError.setMessage("Credenciales incorrectas");
+        apiError.setBackendMessage(exception.getLocalizedMessage());
+        apiError.setTimestamp(LocalDateTime.now(ZoneId.systemDefault()));
+        apiError.setDetails(null);
+
+        return ResponseEntity.status(httpCode).body(apiError);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiErrorDto> handleResourceNotFoundException(ResourceNotFoundException exception,
