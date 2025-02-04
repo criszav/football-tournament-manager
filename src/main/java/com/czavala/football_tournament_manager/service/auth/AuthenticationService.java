@@ -10,6 +10,7 @@ import com.czavala.football_tournament_manager.mapper.user.UserMapper;
 import com.czavala.football_tournament_manager.persistance.entity.User;
 import com.czavala.football_tournament_manager.service.UserService;
 import com.czavala.football_tournament_manager.service.security.CustomUserDetailsService;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -99,12 +100,12 @@ public class AuthenticationService {
                 .build();
     }
 
-    public UserProfileDto findLoggedInUser() throws AccessException {
+    public UserProfileDto findLoggedInUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal().equals("anonymousUser")) {
-            throw new AccessException("Error, usuario no autenticado");
+            throw new AccessDeniedException("Error, usuario no autenticado");
         }
 
         // Obtiene username (principal) desde el objeto "Authentication" del user que ha iniciado sesion
