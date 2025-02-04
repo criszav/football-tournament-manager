@@ -3,14 +3,12 @@ package com.czavala.football_tournament_manager.controller.auth;
 import com.czavala.football_tournament_manager.dto.auth.login.LoginRequestDto;
 import com.czavala.football_tournament_manager.dto.auth.login.LoginResponseDto;
 import com.czavala.football_tournament_manager.dto.user.UserProfileDto;
-import com.czavala.football_tournament_manager.persistance.entity.User;
 import com.czavala.football_tournament_manager.service.auth.AuthenticationService;
 import com.czavala.football_tournament_manager.service.auth.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.AccessException;
 
 @RestController
 @RequestMapping("/authenticate")
@@ -37,7 +35,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<UserProfileDto> findMyProfile() throws AccessException {
+    public ResponseEntity<UserProfileDto> findMyProfile() {
         UserProfileDto userProfile = authenticationService.findLoggedInUser();
         return ResponseEntity.ok(userProfile);
     }
