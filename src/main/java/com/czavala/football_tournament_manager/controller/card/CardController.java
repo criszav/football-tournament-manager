@@ -37,7 +37,7 @@ public class CardController {
     }
 
     @GetMapping("/type/{cardType}")
-    public ResponseEntity<Page<CardResponseDto>> findAllYellowCards(@PathVariable String cardType, Pageable pageable) {
+    public ResponseEntity<Page<CardResponseDto>> findCardsByType(@PathVariable String cardType, Pageable pageable) {
         Page<CardResponseDto> cardsByType = cardService.findCardsByType(cardType, pageable);
         return ResponseEntity.ok(cardsByType);
     }
