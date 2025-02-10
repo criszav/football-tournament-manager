@@ -5,8 +5,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -66,7 +69,7 @@ public class JwtService {
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Desde JwtService: NO fue posible extraer username desde token -> token invalido");
+            System.out.println("No fue posible extraer username desde token -> token invalido");
             return false;
         }
 
@@ -85,5 +88,24 @@ public class JwtService {
                 .parseSignedClaims(token)
                 // Retorna claims (cuerpo) del token
                 .getPayload();
+    }
+
+    public String extractJwtFromRequest(HttpServletRequest request) {
+
+        // Obtiene header "Authorization" desde el request (es el que contiene el token)
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (!StringUtils.hasText(authHeader) || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+
+        // Extrae token desde header 'Authorization' del request
+        // Header tiene formato 'Bearer <token>'
+        // Divide header segun un espacio, entonces hay dos items: Bearer (posicion 0) y jwt (posicion 1)
+        return authHeader.split(" ")[1];
+    }
+
+    public Date extractExpirationDate(String jwt) {
+        return extractAllClaimsFromToken(jwt).getExpiration();
     }
 }
