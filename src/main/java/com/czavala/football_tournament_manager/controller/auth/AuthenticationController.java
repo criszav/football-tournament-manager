@@ -1,13 +1,18 @@
 package com.czavala.football_tournament_manager.controller.auth;
 
+import com.czavala.football_tournament_manager.dto.auth.LogoutResponseDto;
 import com.czavala.football_tournament_manager.dto.auth.login.LoginRequestDto;
 import com.czavala.football_tournament_manager.dto.auth.login.LoginResponseDto;
 import com.czavala.football_tournament_manager.dto.user.UserProfileDto;
 import com.czavala.football_tournament_manager.service.auth.AuthenticationService;
 import com.czavala.football_tournament_manager.service.auth.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 
 @RestController
@@ -38,5 +43,14 @@ public class AuthenticationController {
     public ResponseEntity<UserProfileDto> findMyProfile() {
         UserProfileDto userProfile = authenticationService.findLoggedInUser();
         return ResponseEntity.ok(userProfile);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponseDto> logout(HttpServletRequest request) {
+        authenticationService.logout(request);
+        return ResponseEntity.ok(LogoutResponseDto.builder()
+                        .message("Logout exitoso.")
+                        .timestamp(LocalDateTime.now(ZoneId.systemDefault()))
+                        .build());
     }
 }

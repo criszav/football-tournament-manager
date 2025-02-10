@@ -93,8 +93,10 @@ public class SecurityConfig {
 
     // Indica endpoints publicos y privados segun role
     private static void getRequestMatchers(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authRequest) {
+
         // Authenticate
         authRequest.requestMatchers(HttpMethod.POST, "/authenticate/login").permitAll();
+        authRequest.requestMatchers(HttpMethod.POST, "/authenticate/logout").permitAll();
         authRequest.requestMatchers(HttpMethod.GET, "/authenticate/validate-token").permitAll();
         authRequest.requestMatchers(HttpMethod.GET, "/authenticate/profile")
                 .hasAnyRole("SUPER_ADMIN", "ADMIN", "TOURNAMENT_MANAGER", "TEAM_MANAGER");
