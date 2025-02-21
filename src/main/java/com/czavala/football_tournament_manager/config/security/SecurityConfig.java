@@ -213,6 +213,9 @@ public class SecurityConfig {
         authRequest.requestMatchers(HttpMethod.GET, "/tournaments")
                 .permitAll();
 
+        // Stats
+        authRequest.requestMatchers("/stats/**").permitAll();
+
         // Users(ManagerController)
         authRequest.requestMatchers("/manager/register")
                 .hasAnyRole("SUPER_ADMIN", "ADMIN");
