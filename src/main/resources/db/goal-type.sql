@@ -9,3 +9,6 @@ INSERT INTO t_goal_type (type_name, description, is_active) VALUES ("Free kick",
 INSERT INTO t_goal (goal_minute, goal_type_id, match_id, player_id, team_id, tournament_id) VALUES (53, 1, 3, 25, 4, 1);
 INSERT INTO t_goal (goal_minute, goal_type_id, match_id, player_id, team_id, tournament_id) VALUES (57, 4, 3, 29, 4, 1);
 INSERT INTO t_goal (goal_minute, goal_type_id, match_id, player_id, team_id, tournament_id) VALUES (70, 3, 3, 32, 4, 1);
+INSERT INTO t_goal (goal_minute, goal_type_id, match_id, player_id, team_id, tournament_id) VALUES (80, 1, 3, 29, 4, 1);
+INSERT INTO t_goal (goal_minute, goal_type_id, match_id, player_id, team_id, tournament_id) VALUES (85, 1, 3, 29, 4, 1);
+INSERT INTO t_goal (goal_minute, goal_type_id, match_id, player_id, team_id, tournament_id) VALUES (90, 1, 3, 29, 4, 1);
