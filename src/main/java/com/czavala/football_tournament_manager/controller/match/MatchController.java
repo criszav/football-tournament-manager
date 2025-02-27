@@ -1,5 +1,6 @@
 package com.czavala.football_tournament_manager.controller.match;
 
+import com.czavala.football_tournament_manager.dto.match.CreatedMatchDto;
 import com.czavala.football_tournament_manager.dto.match.MatchResponseDto;
 import com.czavala.football_tournament_manager.dto.match.SaveMatchDto;
 import com.czavala.football_tournament_manager.service.MatchService;
@@ -35,9 +36,9 @@ public class MatchController {
     }
 
     @PostMapping
-    public ResponseEntity<MatchResponseDto> createOne(@RequestBody @Valid SaveMatchDto matchDto,
-                                                      HttpServletRequest request) {
-        MatchResponseDto newMatch = matchService.create(matchDto);
+    public ResponseEntity<CreatedMatchDto> createOne(@RequestBody @Valid SaveMatchDto matchDto,
+                                                     HttpServletRequest request) {
+        CreatedMatchDto newMatch = matchService.create(matchDto);
 
         String baseUrl = request.getRequestURL().toString();
         URI newMatchLocation = URI.create(baseUrl + "/" + newMatch.getId());

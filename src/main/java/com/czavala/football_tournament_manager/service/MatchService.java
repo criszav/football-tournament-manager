@@ -1,5 +1,6 @@
 package com.czavala.football_tournament_manager.service;
 
+import com.czavala.football_tournament_manager.dto.match.CreatedMatchDto;
 import com.czavala.football_tournament_manager.dto.match.MatchResponseDto;
 import com.czavala.football_tournament_manager.dto.match.SaveMatchDto;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ public interface MatchService {
 
     MatchResponseDto findOneById(Long matchId);
 
-    MatchResponseDto create(SaveMatchDto matchDto);
+    CreatedMatchDto create(SaveMatchDto matchDto);
 
     MatchResponseDto updateById(Long matchId, SaveMatchDto matchDto);
 
