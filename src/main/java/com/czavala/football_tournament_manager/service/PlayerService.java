@@ -1,5 +1,6 @@
 package com.czavala.football_tournament_manager.service;
 
+import com.czavala.football_tournament_manager.dto.player.CreatedPlayerDto;
 import com.czavala.football_tournament_manager.dto.player.PlayerResponseDto;
 import com.czavala.football_tournament_manager.dto.player.SavePlayerDto;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ public interface PlayerService {
 
     PlayerResponseDto findById(Long playerId);
 
-    PlayerResponseDto create(SavePlayerDto playerDto);
+    CreatedPlayerDto create(SavePlayerDto playerDto);
 
     PlayerResponseDto updateById(Long playerId, SavePlayerDto playerDto);
 

@@ -13,7 +13,10 @@ import java.time.LocalDateTime;
 @Entity
 @Table(
         name = "t_tournament_team",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"tournament_id", "team_id"})
+        uniqueConstraints = @UniqueConstraint(
+                // Constraint indica que un equipo no puede repetirse en un mismo torneo
+                name = "UK_TEAM_TOURNAMENT",
+                columnNames = {"tournament_id", "team_id"})
 )
 public class TournamentTeam {
 

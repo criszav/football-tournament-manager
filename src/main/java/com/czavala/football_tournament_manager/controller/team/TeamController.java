@@ -10,9 +10,11 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 
@@ -40,9 +42,13 @@ public class TeamController {
         return ResponseEntity.ok(team);
     }
 
-    @PostMapping
-    public ResponseEntity<TeamResponseDto> createOne(@RequestBody @Valid SaveTeamDto saveTeamDto,
-                                                     HttpServletRequest request) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<TeamResponseDto> createOne(
+            @RequestPart("team_data") @Valid SaveTeamDto saveTeamDto,
+            @RequestPart(value = "image_file", required = false) MultipartFile imageFile,
+            HttpServletRequest request) {
+
+        saveTeamDto.setImageFile(imageFile);
         TeamResponseDto newTeam = teamService.createOne(saveTeamDto);
 
         String baseUrl = request.getRequestURL().toString();
@@ -54,10 +60,15 @@ public class TeamController {
                 .body(newTeam);
     }
 
-    @PutMapping("/{teamId}")
-    public ResponseEntity<TeamResponseDto> updateOneById(@PathVariable Long teamId,
-                                                         @RequestBody @Valid SaveTeamDto saveTeamDto) {
+    @PutMapping(value = "/{teamId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<TeamResponseDto> updateOneById(
+            @PathVariable Long teamId,
+            @RequestPart("team_data") @Valid SaveTeamDto saveTeamDto,
+            @RequestPart(value = "image_file", required = false) MultipartFile imageFile) {
+
+        saveTeamDto.setImageFile(imageFile);
         TeamResponseDto updatedTeam = teamService.updateOneById(teamId, saveTeamDto);
+
         return ResponseEntity.ok(updatedTeam);
     }
 

@@ -9,4 +9,5 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     Page<Match> findByMatchStatusId(Long matchStatusId, Pageable pageable);
 
+    boolean existsByHomeTeamIdAndAwayTeamId(Long homeTeamId, Long awayTeamId);
 }

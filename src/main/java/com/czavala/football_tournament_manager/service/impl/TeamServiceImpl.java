@@ -13,10 +13,14 @@ import com.czavala.football_tournament_manager.persistance.repository.CardReposi
 import com.czavala.football_tournament_manager.persistance.repository.PlayerRepository;
 import com.czavala.football_tournament_manager.persistance.repository.TeamRepository;
 import com.czavala.football_tournament_manager.service.TeamService;
+import com.czavala.football_tournament_manager.service.cloudinary.CloudinaryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -24,11 +28,16 @@ public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
     private final CardRepository cardRepository;
     private final PlayerRepository playerRepository;
+    private final CloudinaryService cloudinaryService;
 
-    public TeamServiceImpl(TeamRepository teamRepository, CardRepository cardRepository, PlayerRepository playerRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository,
+                           CardRepository cardRepository,
+                           PlayerRepository playerRepository,
+                           CloudinaryService cloudinaryService) {
         this.teamRepository = teamRepository;
         this.cardRepository = cardRepository;
         this.playerRepository = playerRepository;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @Transactional(readOnly = true)
@@ -52,21 +61,56 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public TeamResponseDto createOne(SaveTeamDto saveTeamDto) {
-        Team newTeam = TeamMapper.mapToTeamEntity(saveTeamDto);
+    public TeamResponseDto createOne(SaveTeamDto teamDto) {
+
+        Team newTeam = new Team();
+        newTeam.setName(teamDto.getName());
+        newTeam.setTeamCode(teamDto.getTeamCode().toUpperCase());
+        newTeam.setActive(teamDto.getIsActive());
+        newTeam.setEnabled(teamDto.getIsEnabled());
+        newTeam.setUserId(teamDto.getUserId());
+
+        // Sube imagen a Cloudinary
+        // Retorna url de imagen, de lo contrario retorna null
+        String imageUrl = cloudinaryService.uploadImageToCloudinary(
+                teamDto.getImageFile(),
+                "teams", // Indica que imagen se guardará en carpeta 'teams' en Cloudinary
+                teamDto.getTeamCode() // Asignará código del equipo al nombre de la imagen
+        );
+
+        newTeam.setImageUrl(imageUrl);
+        newTeam.setCreatedAt(LocalDateTime.now(ZoneId.systemDefault()));
+
         teamRepository.save(newTeam);
         return TeamMapper.mapToTeamResponseDto(newTeam);
     }
 
     @Override
-    public TeamResponseDto updateOneById(Long teamId, SaveTeamDto saveTeamDto) {
+    public TeamResponseDto updateOneById(Long teamId, SaveTeamDto teamDto) {
         Team teamFromDB = this.findTeamEntityById(teamId);
-        teamFromDB.setName(saveTeamDto.getName());
-        teamFromDB.setTeamCode(saveTeamDto.getTeamCode());
-        teamFromDB.setImageUrl(saveTeamDto.getImageUrl());
-        teamFromDB.setActive(saveTeamDto.getIsActive());
-        teamFromDB.setEnabled(saveTeamDto.getIsEnabled());
-        teamFromDB.setUserId(saveTeamDto.getUserId());
+
+        teamFromDB.setName(teamDto.getName());
+        teamFromDB.setTeamCode(teamDto.getTeamCode());
+        teamFromDB.setActive(teamDto.getIsActive());
+        teamFromDB.setEnabled(teamDto.getIsEnabled());
+        teamFromDB.setUserId(teamDto.getUserId());
+
+        // Verifica si la petición contiene una nueva imagen
+        // Si petición NO contiene una nueva imagen entonces se mantiene url de imagen existente
+        if (teamDto.getImageFile() != null && !teamDto.getImageFile().isEmpty()) {
+
+            // Sube nueva imagen a Cloudinary y obtiene nueva url
+            String newImageUrl = cloudinaryService.uploadImageToCloudinary(
+                    teamDto.getImageFile(),
+                    "teams", // Nombre carpeta donde se guardará nueva imagen en Cloudinary
+                    teamFromDB.getName()
+            );
+
+            // Actualiza nueva url de la imagen del team en db
+            teamFromDB.setImageUrl(newImageUrl);
+        }
+        teamFromDB.setLastModified(LocalDateTime.now(ZoneId.systemDefault()));
+
         teamRepository.save(teamFromDB);
 
         return TeamMapper.mapToTeamResponseDto(teamFromDB);

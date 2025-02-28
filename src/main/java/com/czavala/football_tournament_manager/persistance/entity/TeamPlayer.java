@@ -14,7 +14,10 @@ import java.util.Date;
 @Entity
 @Table(
         name = "t_team_player",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "team_id", "tournament_id"})
+        uniqueConstraints = @UniqueConstraint(
+                // Constraint indica que un jugador solo puede estar en un equipo a la vez en un torneo
+                name = "UK_PLAYER_TEAM_TOURNAMENT",
+                columnNames = {"player_id", "team_id", "tournament_id"})
 )
 public class TeamPlayer {
 

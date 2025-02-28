@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -29,6 +29,6 @@ public class ApiErrorDto implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime timestamp;
 
-    private List<String> details;
+    private Map<String, Object> details;
 
 }

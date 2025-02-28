@@ -1,5 +1,6 @@
 package com.czavala.football_tournament_manager.mapper.player;
 
+import com.czavala.football_tournament_manager.dto.player.CreatedPlayerDto;
 import com.czavala.football_tournament_manager.dto.player.PlayerResponseDto;
 import com.czavala.football_tournament_manager.dto.player.PlayerTeamDto;
 import com.czavala.football_tournament_manager.dto.player.SavePlayerDto;
@@ -28,23 +29,6 @@ public class PlayerMapper implements Serializable {
                 .build();
     }
 
-    public static Player mapToPlayerEntity(SavePlayerDto savePlayerDto) {
-
-        if (savePlayerDto == null) return null;
-
-        Player player = new Player();
-        player.setFirstname(savePlayerDto.getFirstname());
-        player.setLastname(savePlayerDto.getLastname());
-        player.setNickname(savePlayerDto.getNickname());
-        player.setImageUrl(savePlayerDto.getImageUrl());
-        player.setSquadNumber(savePlayerDto.getSquadNumber());
-        player.setActive(savePlayerDto.getIsActive());
-        player.setEnabled(savePlayerDto.getIsEnabled());
-        player.setTeamId(savePlayerDto.getTeamId());
-
-        return player;
-    }
-
     public static PlayerResponseDto mapToPlayerResponseDto(Player playerEntity) {
 
         if (playerEntity == null) return null;
@@ -59,6 +43,23 @@ public class PlayerMapper implements Serializable {
                 .isActive(playerEntity.isActive())
                 .isEnabled(playerEntity.isEnabled())
                 .teamName(playerEntity.getTeam().getName())
+                .build();
+    }
+
+    public static CreatedPlayerDto mapToCreatedPlayerDto(Player playerEntity) {
+
+        if (playerEntity == null) return null;
+
+        return CreatedPlayerDto.builder()
+                .id(playerEntity.getId())
+                .firstname(playerEntity.getFirstname())
+                .lastname(playerEntity.getLastname())
+                .nickname(playerEntity.getNickname())
+                .imageUrl(playerEntity.getImageUrl())
+                .squadNumber(playerEntity.getSquadNumber())
+                .isActive(playerEntity.isActive())
+                .isEnabled(playerEntity.isEnabled())
+                .teamId(playerEntity.getTeamId())
                 .build();
     }
 

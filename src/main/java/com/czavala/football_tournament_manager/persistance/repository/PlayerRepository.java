@@ -9,4 +9,5 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 
     Page<Player> findByTeamId(Long teamId, Pageable pageable);
 
+    boolean existsBySquadNumberAndTeamId(Integer squadNumber, Long teamId);
 }

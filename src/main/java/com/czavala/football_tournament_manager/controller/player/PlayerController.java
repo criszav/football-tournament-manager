@@ -1,5 +1,6 @@
 package com.czavala.football_tournament_manager.controller.player;
 
+import com.czavala.football_tournament_manager.dto.player.CreatedPlayerDto;
 import com.czavala.football_tournament_manager.dto.player.PlayerResponseDto;
 import com.czavala.football_tournament_manager.dto.player.SavePlayerDto;
 import com.czavala.football_tournament_manager.service.PlayerService;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 
@@ -35,9 +37,13 @@ public class PlayerController {
     }
 
     @PostMapping
-    public ResponseEntity<PlayerResponseDto> createOne(@RequestBody @Valid SavePlayerDto playerDto,
-                                                       HttpServletRequest request) {
-        PlayerResponseDto newPlayer = playerService.create(playerDto);
+    public ResponseEntity<CreatedPlayerDto> createOne(
+            @RequestPart("player_data") @Valid SavePlayerDto playerDto,
+            @RequestPart(value = "image_file", required = false) MultipartFile imageFile,
+            HttpServletRequest request) {
+
+        playerDto.setImageFile(imageFile);
+        CreatedPlayerDto newPlayer = playerService.create(playerDto);
 
         String baseUrl = request.getRequestURL().toString();
         URI newPlayerLocation = URI.create(baseUrl + "/" + newPlayer.getId());
@@ -49,9 +55,14 @@ public class PlayerController {
     }
 
     @PutMapping("/{playerId}")
-    public ResponseEntity<PlayerResponseDto> updateOneById(@PathVariable Long playerId,
-                                                           @RequestBody @Valid SavePlayerDto playerDto) {
+    public ResponseEntity<PlayerResponseDto> updateOneById(
+            @PathVariable Long playerId,
+            @RequestPart("player_data") @Valid SavePlayerDto playerDto,
+            @RequestPart(value = "image_file", required = false) MultipartFile imageFile) {
+
+        playerDto.setImageFile(imageFile);
         PlayerResponseDto updatedPlayer = playerService.updateById(playerId, playerDto);
+
         return ResponseEntity.ok(updatedPlayer);
     }
 
