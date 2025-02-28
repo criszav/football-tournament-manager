@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
         apiError.setHttpCode(httpCode);
         apiError.setHttpMethod(request.getMethod());
         apiError.setUrl(request.getRequestURL().toString());
-        apiError.setMessage("Recurso solicitado no encontrado. Por favor intente otra busqueda diferente.");
+        apiError.setMessage("Recurso solicitado no encontrado. Por favor intente otra búsqueda diferente.");
         apiError.setBackendMessage(exception.getLocalizedMessage());
         apiError.setTimestamp(LocalDateTime.now(ZoneId.systemDefault()));
         apiError.setDetails(null);
