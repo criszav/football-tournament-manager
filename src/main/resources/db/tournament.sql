@@ -7,10 +7,11 @@ INSERT INTO t_tournament_status (status_name, description, is_active) VALUES ("C
 
 -- Tournaments
 INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id) VALUES ("Segunda División Profesional de Chile 2024", '2024-03-02', '2024-10-31', 14, false, 1, 3);
-INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id) VALUES ("Segunda División Profesional de Chile 2023", '2023-02-24', '2023-10-15', 14, false, 1, 3);
 INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id) VALUES ("Copa Chile 2024", '2024-04-27', '2024-11-20', 65, false, 2, 3);
-INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id) VALUES ("Copa Chile 2023", '2023-03-08', '2023-12-13', 76, false, 2, 3);
-INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id) VALUES ("Primera División de Chile 2025", '2025-02-16', '2025-11-10', 16, false, 2, 1);
+INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id) VALUES ("Liga de Primera 2025", '2025-02-14', '2025-12-07', 16, true, 1, 2);
+INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id) VALUES ("Liga de Ascenso 2025", '2025-02-21', '2025-11-30', 16, true, 1, 2);
+INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id) VALUES ("Segunda La Liga 2D 2025", '2025-03-01', '2025-11-30', 14, true, 1, 1);
+INSERT INTO t_tournament (name, start_date, end_date, number_of_teams, is_active, user_id, tournament_status_id) VALUES ("Copa Chile 2025", '2025-01-26', null, 32, true, 1, 2);
 
 -- Tournament Teams
 INSERT INTO t_tournament_team (tournament_id, team_id) VALUES (1, 1);
