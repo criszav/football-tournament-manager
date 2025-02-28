@@ -16,7 +16,9 @@ import java.util.List;
 @Table(
         name = "t_player",
         // no puede haber dos jugadores con el mismo numero de camiseta en un mismo equipo
-        uniqueConstraints = @UniqueConstraint(columnNames = {"squad_number", "team_id"})
+        uniqueConstraints = @UniqueConstraint(
+                name = "UK_PLAYER_SQUAD_TEAM",
+                columnNames = {"squad_number", "team_id"})
 )
 public class Player {
 
