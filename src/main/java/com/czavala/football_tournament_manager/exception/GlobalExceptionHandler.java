@@ -65,14 +65,15 @@ public class GlobalExceptionHandler {
                                                                              HttpServletRequest request) {
 
         List<ObjectError> errors = exception.getAllErrors();
-        List<String> details = errors.stream().map(error -> {
 
-            if (error instanceof FieldError fieldError) {
-                return fieldError.getField() + ": " + fieldError.getDefaultMessage();
-            }
-            return error.getDefaultMessage();
-
-        }).toList();
+        // Crea Map que contendrá errores en pares clave-valor
+        Map<String, Object> details = errors.stream()
+                .filter(error -> error instanceof FieldError) // Filtra sólo por errores de campo (FieldError)
+                .map(error -> (FieldError) error) // Convierte cada error en un objeto de tipo FieldError
+                .collect(Collectors.toMap(
+                        FieldError::getField, // clave del Map: nombre del campo
+                        fieldError -> fieldError.getDefaultMessage() // valor del Map, mensaje de error
+                ));
 
         int httpCode = HttpStatus.BAD_REQUEST.value();
 
