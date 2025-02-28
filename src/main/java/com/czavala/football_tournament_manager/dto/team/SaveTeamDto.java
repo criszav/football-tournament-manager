@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 
@@ -21,8 +22,8 @@ public class SaveTeamDto implements Serializable {
     @Size(min = 2, max = 3, message = "{generic.size}")
     private String teamCode;
 
-    @JsonProperty("image_url")
-    private String imageUrl;
+    @JsonProperty("image_file")
+    private MultipartFile imageFile;
 
     @JsonProperty(value = "is_active")
     @NotNull(message = "{generic.notnull}")
