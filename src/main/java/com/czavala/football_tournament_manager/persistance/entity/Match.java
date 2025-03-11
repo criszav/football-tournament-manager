@@ -34,6 +34,9 @@ public class Match {
     @Column(name = "match_kick_off")
     private LocalTime matchKickOff;
 
+    // Indica a que fecha del torneo corresponde un match
+    private Integer matchday;
+
     @Column(name = "home_team_goals")
     private Integer homeTeamGoals;
 
@@ -76,6 +79,8 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "away_team_id", insertable = false, updatable = false)
     private Team awayTeam;
+
+    private String notes;
 
     @CreationTimestamp
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")

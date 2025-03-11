@@ -21,6 +21,9 @@ public class SaveMatchDto implements Serializable {
     @JsonProperty("match_kick_off")
     private LocalTime matchKickOff;
 
+    @Positive(message = "{generic.positive}")
+    private Integer matchday;
+
     @JsonProperty("home_team_goals")
     @PositiveOrZero(message = "{generic.positive-or-zero")
     private Integer homeTeamGoals;
@@ -48,5 +51,7 @@ public class SaveMatchDto implements Serializable {
     @NotNull(message = "{generic.notnull}")
     @Positive(message = "{generic.positive}")
     private Long tournamentId;
+
+    private String notes;
 
 }
