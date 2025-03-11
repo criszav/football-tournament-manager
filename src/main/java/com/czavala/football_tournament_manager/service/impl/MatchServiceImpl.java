@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -62,6 +64,7 @@ public class MatchServiceImpl implements MatchService {
         Match matchFromDB = this.findMatchEntityById(matchId);
         matchFromDB.setMatchDate(matchDto.getMatchDate());
         matchFromDB.setMatchKickOff(matchDto.getMatchKickOff());
+        matchFromDB.setMatchday(matchDto.getMatchday());
         matchFromDB.setMatchStatusId(matchDto.getMatchStatusId());
         matchFromDB.setHomeTeamGoals(matchDto.getHomeTeamGoals());
         matchFromDB.setAwayTeamGoals(matchDto.getAwayTeamGoals());
@@ -74,9 +77,23 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Page<MatchResponseDto> findMatchesByMatchStatusBy(Long matchStatusId, Pageable pageable) {
+    public Page<MatchResponseDto> findMatchesByMatchStatusId(Long matchStatusId, Pageable pageable) {
         return matchRepository.findByMatchStatusId(matchStatusId, pageable)
                 .map(MatchMapper::mapToMatchResponseDto);
+    }
+
+    @Override
+    public List<MatchResponseDto> findMatchesByTeamInTournament(Long tournamentId, Long teamId) {
+        return matchRepository.findByTeamIdInTournament(tournamentId, teamId).stream()
+                .map(MatchMapper::mapToMatchResponseDto)
+                .toList();
+    }
+
+    @Override
+    public List<MatchResponseDto> findByMatchdayInTournament(Long tournamentId, Integer matchday) {
+        return matchRepository.findByTournamentIdAndMatchday(tournamentId, matchday).stream()
+                .map(MatchMapper::mapToMatchResponseDto)
+                .toList();
     }
 
     private Match findMatchEntityById(Long matchId) {

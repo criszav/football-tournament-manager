@@ -6,6 +6,8 @@ import com.czavala.football_tournament_manager.dto.match.SaveMatchDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface MatchService {
     
     Page<MatchResponseDto> findAllMatches(Pageable pageable);
@@ -16,5 +18,10 @@ public interface MatchService {
 
     MatchResponseDto updateById(Long matchId, SaveMatchDto matchDto);
 
-    Page<MatchResponseDto> findMatchesByMatchStatusBy(Long matchStatusId, Pageable pageable);
+    Page<MatchResponseDto> findMatchesByMatchStatusId(Long matchStatusId, Pageable pageable);
+
+    List<MatchResponseDto> findMatchesByTeamInTournament(Long tournamentId, Long teamId);
+
+    List<MatchResponseDto> findByMatchdayInTournament(Long tournamentId, Integer matchday);
 }
+

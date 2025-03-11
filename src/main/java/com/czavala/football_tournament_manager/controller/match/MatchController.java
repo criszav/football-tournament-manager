@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/matches")
@@ -59,8 +60,25 @@ public class MatchController {
     @GetMapping("/status/{matchStatusId}")
     public ResponseEntity<Page<MatchResponseDto>> findAllByMatchStatusId(@PathVariable Long matchStatusId,
                                                                          Pageable pageable) {
-        Page<MatchResponseDto> matchesByStatus = matchService.findMatchesByMatchStatusBy(matchStatusId, pageable);
+        Page<MatchResponseDto> matchesByStatus = matchService.findMatchesByMatchStatusId(matchStatusId, pageable);
         return ResponseEntity.ok(matchesByStatus);
+    }
+
+    @GetMapping("/{tournamentId}/team/{teamId}")
+    public ResponseEntity<List<MatchResponseDto>> findMatchesByTeamByTournament(
+            @PathVariable Long tournamentId,
+            @PathVariable Long teamId) {
+
+        List<MatchResponseDto> matchesByTeam = matchService.findMatchesByTeamInTournament(tournamentId, teamId);
+        return ResponseEntity.ok(matchesByTeam);
+    }
+
+    @GetMapping("/{tournamentId}/matchday/{matchday}")
+    public ResponseEntity<List<MatchResponseDto>> findMatchesByMatchdayByTournament(
+            @PathVariable Long tournamentId, @PathVariable Integer matchday) {
+
+        List<MatchResponseDto> matchesByMatchday = matchService.findByMatchdayInTournament(tournamentId, matchday);
+        return ResponseEntity.ok(matchesByMatchday);
     }
 
 }
