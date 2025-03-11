@@ -18,12 +18,14 @@ public class MatchResponseDto {
     private Long id;
 
     @JsonProperty("match_date")
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date matchDate;
 
     @JsonProperty("match_kick_off")
     @JsonFormat(pattern = "HH:mm")
     private LocalTime matchKickOff;
+
+    private Integer matchday;
 
     @JsonProperty("home_team")
     private String homeTeam;
@@ -39,5 +41,7 @@ public class MatchResponseDto {
 
     @JsonProperty("match_status")
     private String matchStatus;
+
+    private String notes;
 
 }

@@ -150,15 +150,15 @@ public class SecurityConfig {
 //                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
 
         // Match
-        authRequest.requestMatchers(HttpMethod.GET, "/matches/{matchId}")
-                .permitAll();
+//        authRequest.requestMatchers(HttpMethod.GET, "/matches/{matchId}")
+//                .permitAll();
         authRequest.requestMatchers(HttpMethod.POST, "/matches")
                 .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
         authRequest.requestMatchers(HttpMethod.PUT, "/matches/{matchId}")
                 .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
         authRequest.requestMatchers(HttpMethod.GET, "/matches/status/{matchStatusId}")
                 .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER", "TEAM_MANAGER");
-        authRequest.requestMatchers(HttpMethod.GET, "/matches")
+        authRequest.requestMatchers(HttpMethod.GET, "/matches/**")
                 .permitAll();
 
         // Players
