@@ -32,11 +32,11 @@ public class UserProfileDto implements Serializable {
     private String role;
 
     @JsonProperty("created_at")
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createdAt;
 
     @JsonProperty("last_modified")
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime lastModified;
 
     @JsonProperty("account_enabled")
