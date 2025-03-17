@@ -44,41 +44,4 @@ public class MatchMapper {
                 .build();
     }
 
-    public static CreatedMatchDto mapToCreatedMatchDto(Match matchEntity) {
-
-        if (matchEntity == null) return null;
-
-        return CreatedMatchDto.builder()
-                .id(matchEntity.getId())
-                .matchDate(matchEntity.getMatchDate())
-                .matchKickOff(matchEntity.getMatchKickOff())
-                .homeTeamId(matchEntity.getHomeTeamId())
-                .awayTeamId(matchEntity.getAwayTeamId())
-                .matchStatusId(matchEntity.getMatchStatusId())
-                .homeTeamGoals(matchEntity.getHomeTeamGoals())
-                .awayTeamGoals(matchEntity.getAwayTeamGoals())
-                .build();
-    }
-
-
-    public static Match mapToMatchEntity(SaveMatchDto matchDto) {
-
-        if (matchDto == null) return null;
-
-        Match match = new Match();
-        match.setMatchDate(matchDto.getMatchDate());
-        match.setMatchKickOff(matchDto.getMatchKickOff());
-        match.setMatchday(match.getMatchday());
-        match.setHomeTeamId(matchDto.getHomeTeamId());
-        match.setAwayTeamId(matchDto.getAwayTeamId());
-        match.setMatchStatusId(matchDto.getMatchStatusId());
-        match.setHomeTeamGoals(matchDto.getHomeTeamGoals());
-        match.setAwayTeamGoals(matchDto.getAwayTeamGoals());
-        match.setTournamentId(matchDto.getTournamentId());
-        match.setNotes(matchDto.getNotes());
-
-        return match;
-
-    }
-
 }
