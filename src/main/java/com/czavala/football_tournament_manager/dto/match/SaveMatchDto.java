@@ -8,15 +8,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Getter
 @Setter
 public class SaveMatchDto implements Serializable {
 
     @JsonProperty("match_date")
-    private Date matchDate;
+    private LocalDate matchDate;
 
     @JsonProperty("match_kick_off")
     private LocalTime matchKickOff;

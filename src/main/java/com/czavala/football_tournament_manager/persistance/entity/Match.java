@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
@@ -29,7 +30,7 @@ public class Match {
     private Long id;
 
     @Column(name = "match_date")
-    private Date matchDate;
+    private LocalDate matchDate;
 
     @Column(name = "match_kick_off")
     private LocalTime matchKickOff;

@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -18,8 +18,8 @@ public class MatchResponseDto {
     private Long id;
 
     @JsonProperty("match_date")
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date matchDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate matchDate;
 
     @JsonProperty("match_kick_off")
     @JsonFormat(pattern = "HH:mm")
