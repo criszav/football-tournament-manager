@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 
@@ -42,15 +44,26 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public CreatedMatchDto create(SaveMatchDto matchDto) {
 
-        // Valida equipos de nuevo match ingresado
-        // Verifica que equipos NO sean el mismo (un equipo no puede jugar contra sí mismo)
         // Verifica que no exista previamente el match que se ingresa
-        validateMatch(matchDto);
+        validateMatchExists(matchDto);
+        // Verifica que equipos NO sean el mismo (un equipo no puede jugar contra sí mismo)
+        validateTeams(matchDto);
 
-        Match matchEntity = MatchMapper.mapToMatchEntity(matchDto);
-        matchRepository.save(matchEntity);
+        Match match = new Match();
+        match.setMatchDate(matchDto.getMatchDate());
+        match.setMatchKickOff(matchDto.getMatchKickOff());
+        match.setMatchday(matchDto.getMatchday());
+        match.setHomeTeamId(matchDto.getHomeTeamId());
+        match.setAwayTeamId(matchDto.getAwayTeamId());
+        match.setMatchStatusId(matchDto.getMatchStatusId());
+        match.setHomeTeamGoals(matchDto.getHomeTeamGoals());
+        match.setAwayTeamGoals(matchDto.getAwayTeamGoals());
+        match.setTournamentId(matchDto.getTournamentId());
+        match.setNotes(matchDto.getNotes());
+        match.setCreatedAt(LocalDateTime.now(ZoneId.systemDefault()));
+        matchRepository.save(match);
 
-        return MatchMapper.mapToCreatedMatchDto(matchEntity);
+        return MatchMapper.mapToCreatedMatchDto(match);
     }
 
     @Override
@@ -58,8 +71,7 @@ public class MatchServiceImpl implements MatchService {
 
         // Valida equipos de match que se actualiza
         // Verifica que equipos NO sean el mismo (un equipo no puede jugar contra sí mismo)
-        // Verifica que no exista previamente el match que se ingresa
-        validateMatch(matchDto);
+        validateTeams(matchDto);
 
         Match matchFromDB = this.findMatchEntityById(matchId);
         matchFromDB.setMatchDate(matchDto.getMatchDate());
@@ -71,6 +83,7 @@ public class MatchServiceImpl implements MatchService {
         matchFromDB.setHomeTeamId(matchDto.getHomeTeamId());
         matchFromDB.setAwayTeamId(matchDto.getAwayTeamId());
         matchFromDB.setTournamentId(matchDto.getTournamentId());
+        matchFromDB.setLastModified(LocalDateTime.now(ZoneId.systemDefault()));
         matchRepository.save(matchFromDB);
 
         return MatchMapper.mapToMatchResponseDto(matchFromDB);
@@ -101,14 +114,8 @@ public class MatchServiceImpl implements MatchService {
                 .orElseThrow(() -> new ResourceNotFoundException("Match no encontrado. Match id: " + matchId));
     }
 
-    // Valida que al ingresar/actualizar un match los equipos NO sean el mismo y que el match no exista previamente
-    private void validateMatch(SaveMatchDto matchDto) {
-
-        // Verifica que equipos asignados al partido NO sean el mismo equipo
-        // Un equipo no puede jugar contra sí mismo
-        if (matchDto.getHomeTeamId().equals(matchDto.getAwayTeamId())) {
-            throw new InvalidMatchException("Error al crear partido. No se debe repetir el equipo.");
-        }
+    // Verifica si el Match que se está creando ya existe en el sistema
+    public void validateMatchExists(SaveMatchDto matchDto) {
 
         // Verifica que no exista previamente el match entre ambos equipos en el mismo torneo
         boolean matchExists = matchRepository.existsByHomeTeamIdAndAwayTeamId(
@@ -119,6 +126,16 @@ public class MatchServiceImpl implements MatchService {
                     "Es posible que ya exista un partido entre ambos equipos ingresados. " +
                     "Por favor verifique si el partido ya fue creado previamente.";
             throw new InvalidMatchException(errorMsg);
+        }
+    }
+
+    // Valida que al ingresar/actualizar un match los equipos NO sean el mismo
+    public void validateTeams(SaveMatchDto matchDto) {
+
+        // Verifica que equipos asignados al partido NO sean el mismo equipo
+        // Un equipo no puede jugar contra sí mismo
+        if (matchDto.getHomeTeamId().equals(matchDto.getAwayTeamId())) {
+            throw new InvalidMatchException("Error al crear partido. No se debe repetir el equipo.");
         }
     }
 }
