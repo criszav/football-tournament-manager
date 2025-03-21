@@ -13,5 +13,5 @@ public interface TournamentTeamRepository extends JpaRepository<TournamentTeam, 
     Page<Team> findTeamByTournamentId(Long tournamentId, Pageable pageable);
 
 
-
+    boolean existsByTournamentIdAndTeamId(Long tournamentId, Long teamId);
 }
