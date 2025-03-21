@@ -163,6 +163,24 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(httpCode).body(apiError);
     }
 
+    @ExceptionHandler(InvalidTournamentTeamException.class)
+    public ResponseEntity<ApiErrorDto> handleInvalidTournamentTeamException(
+            InvalidTournamentTeamException exception, HttpServletRequest request) {
+
+        int httpCode = HttpStatus.BAD_REQUEST.value();
+
+        ApiErrorDto apiError = new ApiErrorDto();
+        apiError.setHttpCode(httpCode);
+        apiError.setHttpMethod(request.getMethod());
+        apiError.setUrl(request.getRequestURL().toString());
+        apiError.setMessage(exception.getMessage());
+        apiError.setBackendMessage(exception.getLocalizedMessage());
+        apiError.setTimestamp(LocalDateTime.now(ZoneId.systemDefault()));
+        apiError.setDetails(null);
+
+        return ResponseEntity.status(httpCode).body(apiError);
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorDto> handleGenericException(Exception exception, HttpServletRequest request) {
