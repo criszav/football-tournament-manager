@@ -5,13 +5,10 @@ import com.czavala.football_tournament_manager.dto.goal.GetGoalResponseDto;
 import com.czavala.football_tournament_manager.dto.team.TeamTournamentResponseDto;
 import com.czavala.football_tournament_manager.dto.tournament.SaveTournamentDto;
 import com.czavala.football_tournament_manager.dto.tournament.TournamentResponseDto;
-import com.czavala.football_tournament_manager.persistance.entity.Card;
-import com.czavala.football_tournament_manager.persistance.entity.Team;
 import com.czavala.football_tournament_manager.persistance.entity.Tournament;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 public interface TournamentService {
 
