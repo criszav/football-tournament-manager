@@ -213,6 +213,10 @@ public class SecurityConfig {
         authRequest.requestMatchers(HttpMethod.GET, "/tournaments")
                 .permitAll();
 
+        // TournamentTeam
+        authRequest.requestMatchers("/tournament-teams/**")
+                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
+
         // Stats
         authRequest.requestMatchers("/stats/**").permitAll();
 
