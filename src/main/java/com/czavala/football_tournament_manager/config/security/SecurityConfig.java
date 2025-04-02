@@ -11,14 +11,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -128,30 +126,12 @@ public class SecurityConfig {
         // GoalType
         authRequest.requestMatchers("/goal-type")
                 .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.POST, "/goal-type")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.PUT, "/goal-type/{goal-type-id}")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.PUT, "/goal-type/{goal-type-id}/disable")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.GET, "/goal-type")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
 
         // Match Status
         authRequest.requestMatchers("/match-status")
                 .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.POST, "/match-status")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.PUT, "/match-status/{id}")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.PUT, "/match-status/{id}/disable")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.GET, "/match-status")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
 
         // Match
-//        authRequest.requestMatchers(HttpMethod.GET, "/matches/{matchId}")
-//                .permitAll();
         authRequest.requestMatchers(HttpMethod.POST, "/matches")
                 .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
         authRequest.requestMatchers(HttpMethod.PUT, "/matches/{matchId}")
@@ -192,14 +172,6 @@ public class SecurityConfig {
         // Tournament Status
         authRequest.requestMatchers("/tournament-status")
                 .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.POST, "/tournament-status")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.PUT, "/tournament-status/{id}")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.PUT, "/tournament-status/{id}/disable")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
-//        authRequest.requestMatchers(HttpMethod.GET, "/tournament-status")
-//                .hasAnyRole("ADMIN", "TOURNAMENT_MANAGER");
 
         // Tournament
         authRequest.requestMatchers(HttpMethod.GET, "/tournaments/**")
