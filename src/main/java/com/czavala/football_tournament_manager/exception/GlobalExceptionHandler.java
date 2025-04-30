@@ -132,13 +132,15 @@ public class GlobalExceptionHandler {
             DuplicateSquadNumberException exception, HttpServletRequest request) {
 
         int httpCode = HttpStatus.CONFLICT.value();
+        String errorMsg = "Unique constraint 'UK_PLAYER_SQUAD_TEAM' violation: Error al crear o actualizar player, el número de camiseta asignado al jugador ya está en uso.";
+        String backendErrorMsg = exception.getSqlErrorMsg() != null ? exception.getSqlErrorMsg() : errorMsg;
 
         ApiErrorDto apiError = new ApiErrorDto();
         apiError.setHttpCode(httpCode);
         apiError.setHttpMethod(request.getMethod());
         apiError.setUrl(request.getRequestURL().toString());
         apiError.setMessage(exception.getMessage());
-        apiError.setBackendMessage("Unique constraint violation 'UK_PLAYER_SQUAD_TEAM'");
+        apiError.setBackendMessage(backendErrorMsg);
         apiError.setTimestamp(LocalDateTime.now(ZoneId.systemDefault()));
         apiError.setDetails(null);
 
