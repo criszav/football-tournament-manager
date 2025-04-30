@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -30,6 +31,12 @@ public class Player {
 
     @Column(nullable = false)
     private String lastname;
+
+    @Column(unique = true, nullable = false, length = 9)
+    private String run;
+
+    @Column(name = "birth_date")
+    private Date birthDate;
 
     @Column(length = 40, unique = true)
     private String nickname;
@@ -67,9 +74,6 @@ public class Player {
 
     @OneToMany(mappedBy = "player")
     private List<TeamPlayer> teamsPlayer;
-
-    @OneToOne(mappedBy = "player")
-    private PlayerAccount playerAccount;
 
     @CreationTimestamp
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
