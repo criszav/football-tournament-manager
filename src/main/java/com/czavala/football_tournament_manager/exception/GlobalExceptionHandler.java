@@ -3,6 +3,7 @@ package com.czavala.football_tournament_manager.exception;
 import com.czavala.football_tournament_manager.dto.ApiErrorDto;
 import com.czavala.football_tournament_manager.utils.ImageUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -177,6 +178,24 @@ public class GlobalExceptionHandler {
         apiError.setUrl(request.getRequestURL().toString());
         apiError.setMessage(exception.getMessage());
         apiError.setBackendMessage(exception.getLocalizedMessage());
+        apiError.setTimestamp(LocalDateTime.now(ZoneId.systemDefault()));
+        apiError.setDetails(null);
+
+        return ResponseEntity.status(httpCode).body(apiError);
+    }
+
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiErrorDto> handleDataIntegrityViolationException(DataIntegrityViolationException exception, HttpServletRequest request) {
+
+        int httpCode = HttpStatus.CONFLICT.value();
+
+        ApiErrorDto apiError = new ApiErrorDto();
+        apiError.setHttpCode(httpCode);
+        apiError.setHttpMethod(request.getMethod());
+        apiError.setUrl(request.getRequestURL().toString());
+        apiError.setMessage("Error, los datos ingresados no son consistentes. Por favor verifique que los datos sean correctos.");
+        apiError.setBackendMessage(exception.getMessage());
         apiError.setTimestamp(LocalDateTime.now(ZoneId.systemDefault()));
         apiError.setDetails(null);
 
