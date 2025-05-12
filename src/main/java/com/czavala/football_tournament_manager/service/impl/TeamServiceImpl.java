@@ -14,6 +14,9 @@ import com.czavala.football_tournament_manager.persistance.repository.PlayerRepo
 import com.czavala.football_tournament_manager.persistance.repository.TeamRepository;
 import com.czavala.football_tournament_manager.service.TeamService;
 import com.czavala.football_tournament_manager.service.cloudinary.CloudinaryService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -47,6 +50,7 @@ public class TeamServiceImpl implements TeamService {
                 .map(TeamMapper::mapToTeamResponseDto);
     }
 
+    @Cacheable(value = "teams", key = "#teamId") // Guarda el resultado en caché
     @Transactional(readOnly = true)
     @Override
     public TeamResponseDto findOneById(Long teamId) {
@@ -85,6 +89,7 @@ public class TeamServiceImpl implements TeamService {
         return TeamMapper.mapToTeamResponseDto(newTeam);
     }
 
+    @CachePut(value = "teams", key = "#teamId") // Actualiza data en el caché
     @Override
     public TeamResponseDto updateOneById(Long teamId, SaveTeamDto teamDto) {
         Team teamFromDB = this.findTeamEntityById(teamId);
@@ -116,6 +121,7 @@ public class TeamServiceImpl implements TeamService {
         return TeamMapper.mapToTeamResponseDto(teamFromDB);
     }
 
+    @CacheEvict(value = "teams", key = "#teamId") // Elimina el dato del caché
     @Override
     public void disableOneById(Long teamId) {
         Team teamFromDB = this.findTeamEntityById(teamId);
