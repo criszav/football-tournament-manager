@@ -60,7 +60,7 @@ public class TeamServiceImpl implements TeamService {
     @Transactional(readOnly = true)
     @Override
     public Team findTeamEntityById(Long teamId) {
-        return teamRepository.findById(teamId)
+        return teamRepository.findByIdAndIsActiveTrue(teamId)
                 .orElseThrow(() -> new ResourceNotFoundException("Team con ID " + teamId + " no encontrado"));
     }
 
