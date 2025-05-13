@@ -10,6 +10,7 @@ import com.czavala.football_tournament_manager.persistance.repository.PlayerRepo
 import com.czavala.football_tournament_manager.persistance.repository.TeamRepository;
 import com.czavala.football_tournament_manager.persistance.utils.*;
 import com.czavala.football_tournament_manager.service.StatsService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class StatsServiceImpl implements StatsService {
         this.cardRepository = cardRepository;
     }
 
-    // Metodo para obtener listado de goleadores de un torneo
+    @Cacheable(value = "tournament_scorers", key = "#tournamentId")
     @Override
     public List<ScorerDto> getScorersByTournament(Long tournamentId) {
 
@@ -62,7 +63,7 @@ public class StatsServiceImpl implements StatsService {
 
     }
 
-    // Obtiene listado de equipos segun goles anotados en un determinado torneo
+    @Cacheable(value = "tournament_team_goals", key = "#tournamentId")
     @Override
     public List<TeamGoalsScoredDto> getGoalsScoredByTeam(Long tournamentId) {
 

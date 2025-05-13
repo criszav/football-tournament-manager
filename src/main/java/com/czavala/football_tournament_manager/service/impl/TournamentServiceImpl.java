@@ -16,6 +16,9 @@ import com.czavala.football_tournament_manager.persistance.repository.GoalReposi
 import com.czavala.football_tournament_manager.persistance.repository.TournamentRepository;
 import com.czavala.football_tournament_manager.persistance.repository.TournamentTeamRepository;
 import com.czavala.football_tournament_manager.service.TournamentService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -56,6 +59,7 @@ public class TournamentServiceImpl implements TournamentService {
                 .map(TournamentMapper::mapToTournamentDto);
     }
 
+    @Cacheable(value = "tournaments", key = "#tournamentId")
     @Transactional(readOnly = true)
     @Override
     public TournamentResponseDto findOneById(Long tournamentId) {
@@ -77,6 +81,7 @@ public class TournamentServiceImpl implements TournamentService {
         return TournamentMapper.mapToTournamentDto(newTournament);
     }
 
+    @CachePut(value = "tournaments", key = "#tournamentId")
     @Override
     public TournamentResponseDto updateOneById(Long tournamentId, SaveTournamentDto saveTournamentDto) {
         Tournament tournamentFromDB = this.findTournamentEntityById(tournamentId);
@@ -94,6 +99,7 @@ public class TournamentServiceImpl implements TournamentService {
         return TournamentMapper.mapToTournamentDto(tournamentFromDB);
     }
 
+    @CacheEvict(value = "tournaments", key = "#tournamentId")
     @Override
     public void disableOneById(Long tournamentId) {
         Tournament tournamentFromDB = this.findTournamentEntityById(tournamentId);

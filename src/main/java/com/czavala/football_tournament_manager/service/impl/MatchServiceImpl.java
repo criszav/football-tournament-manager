@@ -9,6 +9,8 @@ import com.czavala.football_tournament_manager.mapper.match.MatchMapper;
 import com.czavala.football_tournament_manager.persistance.entity.Match;
 import com.czavala.football_tournament_manager.persistance.repository.MatchRepository;
 import com.czavala.football_tournament_manager.service.MatchService;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,7 @@ public class MatchServiceImpl implements MatchService {
                 .map(MatchMapper::mapToMatchResponseDto);
     }
 
+    @Cacheable(value = "matches", key = "#matchId")
     @Transactional(readOnly = true)
     @Override
     public MatchResponseDto findOneById(Long matchId) {
@@ -66,6 +69,7 @@ public class MatchServiceImpl implements MatchService {
         return MatchMapper.mapToCreatedMatchDto(match);
     }
 
+    @CachePut(value = "matches", key = "#matchId")
     @Override
     public MatchResponseDto updateById(Long matchId, SaveMatchDto matchDto) {
 

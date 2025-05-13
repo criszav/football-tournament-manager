@@ -8,6 +8,8 @@ import com.czavala.football_tournament_manager.mapper.goal.GoalMapper;
 import com.czavala.football_tournament_manager.persistance.entity.Goal;
 import com.czavala.football_tournament_manager.persistance.repository.GoalRepository;
 import com.czavala.football_tournament_manager.service.GoalService;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class GoalServiceImpl implements GoalService {
                 .map(GoalMapper::mapToGoalDto);
     }
 
+    @Cacheable(value = "goals", key = "#goalId")
     @Override
     public GetGoalResponseDto findOneById(Long goalId) {
         return GoalMapper.mapToGoalDto(this.findGoalEntityById(goalId));
@@ -40,6 +43,7 @@ public class GoalServiceImpl implements GoalService {
         return GoalMapper.mapToCreatedGoalDto(goal);
     }
 
+    @CachePut(value = "goals", key = "#goalId")
     @Override
     public GetGoalResponseDto updateById(Long goalId, SaveGoalDto saveGoalDto) {
         Goal goalFromDB = this.findGoalEntityById(goalId);

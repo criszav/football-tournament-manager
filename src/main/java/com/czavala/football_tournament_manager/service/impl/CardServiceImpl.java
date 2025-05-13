@@ -8,6 +8,8 @@ import com.czavala.football_tournament_manager.mapper.card.CardMapper;
 import com.czavala.football_tournament_manager.persistance.entity.Card;
 import com.czavala.football_tournament_manager.persistance.repository.CardRepository;
 import com.czavala.football_tournament_manager.service.CardService;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class CardServiceImpl implements CardService {
                 .map(CardMapper::mapToCardResponseDto);
     }
 
+    @Cacheable(value = "cards", key = "#cardId")
     @Transactional(readOnly = true)
     @Override
     public CardResponseDto findById(Long cardId) {
@@ -56,6 +59,7 @@ public class CardServiceImpl implements CardService {
         return CardMapper.mapToCreatedCardDto(card);
     }
 
+    @CachePut(value = "cards", key = "#cardId")
     @Override
     public CardResponseDto updateById(Long cardId, SaveCardDto cardDto) {
         Card cardFromDB = this.findCardEntityById(cardId);

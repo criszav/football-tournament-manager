@@ -10,6 +10,9 @@ import com.czavala.football_tournament_manager.persistance.entity.Player;
 import com.czavala.football_tournament_manager.persistance.repository.PlayerRepository;
 import com.czavala.football_tournament_manager.service.PlayerService;
 import com.czavala.football_tournament_manager.service.cloudinary.CloudinaryService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +41,7 @@ public class PlayerServiceImpl implements PlayerService {
                 .map(PlayerMapper::mapToPlayerResponseDto);
     }
 
+    @Cacheable(value = "players", key = "#playerId")
     @Transactional(readOnly = true)
     @Override
     public PlayerResponseDto findById(Long playerId) {
@@ -77,6 +81,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     }
 
+    @CachePut(value = "players", key = "#playerId")
     @Override
     public PlayerResponseDto updateById(Long playerId, SavePlayerDto playerDto) {
 
@@ -143,6 +148,7 @@ public class PlayerServiceImpl implements PlayerService {
         }
     }
 
+    @CacheEvict(value = "players", key = "#playerId")
     @Override
     public void disableById(Long playerId) {
         Player playerFromDB = this.findPlayerEntityById(playerId);
