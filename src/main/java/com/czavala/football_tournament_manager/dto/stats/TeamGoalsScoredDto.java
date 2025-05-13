@@ -1,12 +1,12 @@
 package com.czavala.football_tournament_manager.dto.stats;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class TeamGoalsScoredDto {
 

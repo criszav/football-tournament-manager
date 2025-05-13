@@ -3,9 +3,7 @@ package com.czavala.football_tournament_manager.dto.tournament;
 import com.czavala.football_tournament_manager.dto.user.ResponseUserTournamentDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,6 +11,8 @@ import java.util.Date;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class TournamentResponseDto implements Serializable {
 
